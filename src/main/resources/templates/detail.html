@@ -24,7 +24,6 @@
 
 
 <p th:text="${boardDto.writer}"></p>
-<p th:inline="text">작성일: [[${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}]]</p>
 <p th:text="${boardDto.content}"></p>
 
 </body>
