@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>getBoardLsit</title>
     <link rel="stylesheet" th:href="@{/css/board.css}">
 
     <style>
@@ -74,7 +74,7 @@
 </head>
 <body>
     <div id="contents">
-        <a href="/write">글쓰기</a>
+        <a href="/board">글쓰기</a>
 
         <table>
             <thead>
@@ -92,7 +92,7 @@
                     <span th:text="${board.id}"></span>
                 </td>
                 <td>
-                    <a th:href="@{'/list/'+ ${board.id}}">
+                    <a th:href="@{'/board/'+ ${board.id}}">
                         <span th:text="${board.title}"></span>
                     </a>
                 </td>
@@ -119,6 +119,7 @@
             <input type="text" name="searchKeyword">
             <button type="submit">검색</button>
         </form>
+
 
         <!-- 페이징 -->
         <div th:if="${!boardList.isEmpty()}">
@@ -148,6 +149,8 @@
                 </li>
             </ul>
         </div>
-    </div>
+        </div>
+
+
 </body>
 </html>

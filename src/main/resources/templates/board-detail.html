@@ -1,0 +1,262 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>board-datail</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/board.css}">-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<h2 th:text="${boardDto.title}"></h2>-->
+<!--<p th:text="${boardDto.content}"></p>-->
+
+<!--&lt;!&ndash; 수정 or 삭제 &ndash;&gt;-->
+<!--<div>-->
+<!--    <a th:href="@{'/board/edit/' + ${boardDto.id}}">-->
+<!--        <button>수정</button>-->
+<!--    </a>-->
+<!--    <form th:action="@{'/board/delete/'}" method="post">-->
+<!--        <input type="hidden" name="id" th:value="${boardDto.id}"/>-->
+<!--        <button>삭제</button>-->
+<!--    </form>-->
+
+<!--</div>-->
+
+<!--&lt;!&ndash; Reply Section &ndash;&gt;-->
+
+<!--<div>-->
+<!--    <form id="reply" th:action="@{/board/{boardId}/reply (boardId=${boardDto.id})}" method="post">-->
+<!--        <input type="text" id="content" name="content" class="form-control" placeholder="댓글을 입력해주세요.." aria-label="댓글을 입력해주세요.." aria-describedby="basic-addon2">-->
+<!--        <input type="hidden" id="boardId" name="boardId" th:value="${boardDto.id}">-->
+<!--        <div class="input-group-append">-->
+<!--            <button class="btn btn-outline-secondary" type="submit">등록</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>번호</th>-->
+<!--        <th>작성자</th>-->
+<!--        <th>내용</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <th:block th:if="${replyList != null}">-->
+<!--        <tr th:each="reply : ${replyList}">-->
+<!--            <td th:text="${reply.id}"></td>-->
+<!--            <td th:text="${reply.user}"></td>-->
+<!--            <td th:text="${reply.content}"></td>-->
+<!--        </tr>-->
+<!--    </th:block>-->
+<!--    <th:block th:unless="${replyList != null}">-->
+<!--        <tr>-->
+<!--            <td colspan="3">댓글이 없습니다.</td>-->
+<!--        </tr>-->
+<!--    </th:block>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--&lt;!&ndash; Reply Section End &ndash;&gt;-->
+<!--<p class="lead">-->
+<!--    <a href="/boardList" role="button">목록으로</a>-->
+<!--</p>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>board-datail</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction : column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 70%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+            width: 70%;
+            margin: 0 auto;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .input-group {
+            display: flex;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group form {
+            margin-right: 10px;
+            display: flex;
+        }
+
+
+        .input-group-append .btn {
+            margin-left: 5px;
+        }
+
+        table {
+            width: 50%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .lead {
+            font-size: 18px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .lead a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h2 th:text="${boardDto.title}"></h2>
+<p th:text="${boardDto.content}"></p>
+
+<!-- 수정 or 삭제 -->
+<div class="button-group">
+    <a th:href="@{'/board/edit/' + ${boardDto.id}}">
+        <button>수정</button>
+    </a>
+    <form th:action="@{'/board/delete/'}" method="post">
+        <input type="hidden" name="id" th:value="${boardDto.id}" />
+        <button>삭제</button>
+    </form>
+</div>
+
+<!-- Reply Section -->
+<div class="input-group">
+    <form id="reply" th:action="@{/board/{boardId}/reply (boardId=${boardDto.id})}" method="post">
+        <input type="text" id="content" name="content" class="form-control" placeholder="댓글을 입력해주세요.." aria-label="댓글을 입력해주세요.." aria-describedby="basic-addon2" />
+        <input type="hidden" id="boardId" name="boardId" th:value="${boardDto.id}" />
+
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">등록</button>
+        </div>
+    </form>
+</div>
+
+
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>작성자</th>
+        <th>내용</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:if="${replyList != null}">
+        <tr th:each="reply : ${replyList}">
+            <td th:text="${reply.id}"></td>
+            <td th:text="${reply.user}"></td>
+            <td th:text="${reply.content}"></td>
+            <td>
+                <a href="#" onclick="editReply(event, ${reply.id})">수정</a>
+                <a href="#" th:href="@{/board/{boardId}/reply/{replyId}(boardId=${boardDto.id}, replyId=${reply.id})}"
+                   onClick="javascript:deleteReply(event)" th:data-replyid="@{${reply.id}}">삭제</a>
+            </td>
+        </tr>
+    </th:block>
+    <th:block th:unless="${replyList != null}">
+        <tr>
+            <td colspan="4">댓글이 없습니다.</td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+<script>
+    function editReply(e, replyId) {
+        e.preventDefault();
+        // TODO: 댓글 수정 로직 추가
+        console.log("댓글 수정 - replyId:", replyId);
+        // 필요한 작업을 수행하는 코드를 여기에 추가하면 됩니다.
+    }
+    function deleteReply(e) {
+        e.preventDefault();
+        let replyid = e.target.dataset.replyid;
+        let action = e.target.getAttribute("href");
+        let boardid = [[${boardDto.id}]];
+        if (confirm("정말로 삭제하시겠습니까?")) {
+
+            // DELETE 요청 보내는 코드 작성
+            // 예를 들어, axios 또는 fetch API를 사용하여 DELETE 요청을 보낼 수 있습니다.
+            $.ajax({
+                url:action,
+                method:'delete',
+                data: {replyid: Number(replyid)},
+                dataType:'html',
+                success:function(res){
+                    location.href="/board/"+boardid;
+                    console.log('삭제 성공')
+                    console.log(res);
+                },
+                error: function(xhr, status, error) {
+                    // This code will run if the request encounters an error
+                    console.log('Error occurred during the delete request');
+                    console.log('Status: ' + status);
+                    console.log('Error message: ' + error);
+                }
+            })
+        }
+    }
+</script>
+<!-- Reply Section End -->
+<p class="lead">
+    <a href="/boardList" role="button">목록으로</a>
+</p>
+
+</body>
+</html>

@@ -1,8 +1,7 @@
 package board.controller;
 
-import board.domain.Board;
+import board.domain.Reply;
 import board.dto.BoardDto;
-import board.repository.BoardRepository;
 import board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,9 +22,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    private static final int page_size = 10;
-
-    @GetMapping("/")
+    @GetMapping(value = {"/boardList","/"})
     public String list(Model model,
                        @PageableDefault(page = 0, size = 10, sort = "id",
                                direction = Sort.Direction.DESC)
@@ -52,40 +49,43 @@ public class BoardController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "list.html";
+        return "getBoardList";
     }
 
 
 
-    @GetMapping("/write")
-    public String write(){
-        return "write.html";
+    @GetMapping("/board")
+    public String getCreateBoard(){
+        return "create-board.html";
     }
 
-    @PostMapping("/write")
-    public String write(BoardDto dto) {
+    @PostMapping("/board")
+    public String createBoard(BoardDto dto) {
         boardService.savePost(dto);
-        return "redirect:/";
+        return "redirect:/boardList";
     }
 
-    @GetMapping("/list/{no}")
-    public String detail(@PathVariable("no") Long id, Model model){
+    @GetMapping("/board/{boardId}")
+    public String detail(@PathVariable("boardId") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
+        List<Reply> replyList = boardService.getReplyList(id);
         model.addAttribute("boardDto", boardDto);
-        return "detail.html";
+        model.addAttribute("replyList", replyList);
+
+        return "board-detail";
     }
 
-    @GetMapping("/board/edit/{no}")
-    public String edit(@PathVariable("no") Long id, Model model){
+    @GetMapping("/board/edit/{boardId}")
+    public String editBoard(@PathVariable("boardId") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("boardDto", boardDto);
         return "board/edit";
     }
 
-    @PostMapping("/board/edit")
-    public String edit(BoardDto dto){
+    @PostMapping("/board/edit/{no}")
+    public String editBoard(BoardDto dto){
         boardService.savePost(dto);
-        return "redirect:/";
+        return "/board/edit/{no}";
     }
 
     @PostMapping("/board/delete")

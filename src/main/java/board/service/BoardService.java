@@ -1,7 +1,10 @@
 package board.service;
 
 import board.domain.Board;
+import board.domain.Reply;
+import board.domain.User;
 import board.dto.BoardDto;
+import board.exception.DomainException;
 import board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,7 +12,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +31,12 @@ public class BoardService {
 
         for(Board board : boards){
             BoardDto dto = BoardDto.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .writer(board.getWriter())
-                    .createdDate(board.getCreatedDate())
+                    .board(board)
                     .build();
 
             boardDtoList.add(dto);
         }
-        //return boardDtoList;
+        //return boardRequestList;
         return new PageImpl<>(boardDtoList, pageable, boards.getTotalElements());
 
     }
@@ -50,11 +48,7 @@ public class BoardService {
 
         for(Board board : boards){
             BoardDto dto = BoardDto.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .writer(board.getWriter())
-                    .createdDate(board.getCreatedDate())
+                    .board(board)
                     .build();
 
             boardDtoList.add(dto);
@@ -63,7 +57,7 @@ public class BoardService {
     }
 
     public void savePost(BoardDto boardDto){
-        boardRepository.save(boardDto.toEntity()).getId();
+        boardRepository.save(boardDto.toEntity());
     }
 
     public BoardDto getPost(Long id){
@@ -73,11 +67,7 @@ public class BoardService {
             Board board = boardWrapper.get();
 
             BoardDto boardDto = BoardDto.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .content(board.getContent())
-                    .writer(board.getWriter())
-                    .createdDate(board.getCreatedDate())
+                    .board(board)
                     .build();
 
             return boardDto;
@@ -86,6 +76,17 @@ public class BoardService {
         return null;
     }
 
+    public List<Reply> getReplyList(Long boardId){
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(()-> DomainException.notFindRow(boardId));
+
+        List<Reply> replyList = board.getReplyList();
+
+        return replyList;
+    }
+
+
     public void deletePost(Long id){
         Optional<Board> optBoard = boardRepository.findById(id);
         if(optBoard.isPresent()){
@@ -93,5 +94,7 @@ public class BoardService {
             boardRepository.deleteById(id);
         }
     }
+
+
 
 }

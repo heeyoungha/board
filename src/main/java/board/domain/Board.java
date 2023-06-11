@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -25,6 +23,9 @@ public class Board extends TimeEntity{
 
     @Column(length = 10, nullable = false)
     private String writer;
+
+    @OneToMany(mappedBy = "board")
+    private List<Reply> replyList;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
