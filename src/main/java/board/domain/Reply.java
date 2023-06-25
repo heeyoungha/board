@@ -39,5 +39,8 @@ public class Reply extends TimeEntity{
         this.user = user;
     }
 
+    public void updateReply(String content){
+        this.content = content;
+    }
 
 };

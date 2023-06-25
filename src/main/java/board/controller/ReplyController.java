@@ -40,32 +40,21 @@ public class ReplyController {
         return null;
     }
 
-    // 댓글 수정 페이지로 이동
-    @GetMapping("/board/{boardId}/reply/{replyId}/edit")
-    public String editReplyPage(@PathVariable Long boardId, @PathVariable Long replyId, Model model) {
-        ReplyDto replyDto = replyService.getReply(replyId);
-        model.addAttribute("reply", replyDto);
-        return "edit-reply";
-    }
 
     // 댓글 수정 처리
     @PutMapping("/board/{boardId}/reply/{replyId}")
     @ResponseBody
-    public ResponseEntity<String> editReply(@PathVariable Long boardId, @PathVariable Long replyId, @RequestBody ReplyDto editedReplyDto) {
+    public ResponseEntity<String> editReply(@PathVariable("boardId") Long boardId,
+                                            @PathVariable("replyId") Long replyId,
+                                            @RequestParam("content") String content) {
         try {
-            replyService.editReply(replyId, editedReplyDto);
+            replyService.editReply(boardId, replyId, content);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-//Delete어노테이션 사용 시 "Request method 'DELETE' not supported]" 오류 뜸
-//    @DeleteMapping("/board/{boardId}/reply/{replyId}")
-//    public String deleteReply(@PathVariable Long boardId, @PathVariable Long replyId) {
-//        replyService.replyDelete(replyId);
-//        return "redirect:/board/{boardId}";
-//    }
 
     @RequestMapping(value = "/board/{boardId}/reply/{replyId}", method = RequestMethod.DELETE)
     @ResponseBody

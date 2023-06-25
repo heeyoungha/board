@@ -115,13 +115,9 @@
     <form id="reply" th:action="@{/board/{boardId}/reply (boardId=${boardDto.id})}" method="post">
         <input type="text" id="content" name="content" class="form-control" placeholder="댓글을 입력해주세요.." aria-label="댓글을 입력해주세요.." aria-describedby="basic-addon2" />
         <input type="hidden" id="boardId" name="boardId" th:value="${boardDto.id}" />
-
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit">등록</button>
-        </div>
+        <button class="btn btn-outline-secondary" type="submit">등록</button>
     </form>
 </div>
-
 
 <table>
     <thead>
@@ -136,11 +132,22 @@
         <tr th:each="reply : ${replyList}">
             <td th:text="${reply.id}"></td>
             <td th:text="${reply.user}"></td>
-            <td th:text="${reply.content}"></td>
             <td>
-                <a href="#" onclick="editReply(event, ${reply.id})">수정</a>
-                <a href="#" th:href="@{/board/{boardId}/reply/{replyId}(boardId=${boardDto.id}, replyId=${reply.id})}"
-                   onClick="javascript:deleteReply(event)" th:data-replyid="@{${reply.id}}">삭제</a>
+                <span id="${reply.id}" th:text="${reply.content}"></span>
+                <a href="#" id="btnReply" class="edit-reply-button" replyid="${reply.id}" onclick="editReply(event)">수정</a>
+                <a href="#" th:href="@{/board/{boardId}/reply/{replyId}(boardId=${boardDto.id}, replyId=${reply.id})}" onClick="javascript:deleteReply(event)" th:replyid="@{${reply.id}}">삭제</a>
+                <!-- Reply Edit Form -->
+                <form id="editReplyForm" style="display: none;">
+                    <input type="text" id="editContent" name="content" class="form-control" placeholder="댓글을 수정해주세요.." aria-label="댓글을 수정해주세요.." aria-describedby="basic-addon2" />
+                    <input type="hidden" id="replyEdit-boardId" name="replyEdit-boardId" th:value="${boardDto.id}" />
+                    <input type="hidden" id="replyId" name="replyId" th:value="${reply.id}" />
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick="submitEdit(event)">수정 완료</button>
+                        <button class="btn btn-outline-secondary" type="button" onclick="cancelEdit(event)">수정 취소</button>
+                    </div>
+                </form>
+
             </td>
         </tr>
     </th:block>
@@ -151,41 +158,111 @@
     </th:block>
     </tbody>
 </table>
-<script>
-    function editReply(e, replyId) {
-        e.preventDefault();
-        // TODO: 댓글 수정 로직 추가
-        console.log("댓글 수정 - replyId:", replyId);
-        // 필요한 작업을 수행하는 코드를 여기에 추가하면 됩니다.
-    }
-    function deleteReply(e) {
-        e.preventDefault();
-        let replyid = e.target.dataset.replyid;
-        let action = e.target.getAttribute("href");
-        let boardid = [[${boardDto.id}]];
-        if (confirm("정말로 삭제하시겠습니까?")) {
 
-            // DELETE 요청 보내는 코드 작성
-            // 예를 들어, axios 또는 fetch API를 사용하여 DELETE 요청을 보낼 수 있습니다.
-            $.ajax({
-                url:action,
-                method:'delete',
-                data: {replyid: Number(replyid)},
-                dataType:'html',
-                success:function(res){
-                    location.href="/board/"+boardid;
-                    console.log('삭제 성공')
-                    console.log(res);
-                },
-                error: function(xhr, status, error) {
-                    // This code will run if the request encounters an error
-                    console.log('Error occurred during the delete request');
-                    console.log('Status: ' + status);
-                    console.log('Error message: ' + error);
-                }
-            })
-        }
+
+<script>
+    function editReply(event) {
+        event.preventDefault();
+        var replyId = event.target.getAttribute('replyid');
+        var contentElement = document.getElementById(replyId);
+        var editForm = document.getElementById('editReplyForm');
+        var editContent = document.getElementById('editContent');
+
+        // 현재 댓글 내용을 수정 폼에 설정
+        editContent.value = contentElement.innerText;
+
+        // 수정 폼 보이기
+        editForm.style.display = 'block';
+
+        // 댓글 내용 숨기기
+        //contentElement.style.display = 'none';
     }
+
+    function submitEdit(event) {
+        event.preventDefault();
+        var replyId = document.getElementById('replyId').value;
+        var editContent = document.getElementById('editContent').value;
+        var contentElement = document.getElementById('replyId');
+        var editForm = document.getElementById('editReplyForm');
+
+        // 수정된 댓글 내용을 댓글에 설정
+        //console.log(replyId);
+        //console.log(contentElement);
+        contentElement.innerText = editContent;
+
+        // 수정 폼 숨기기
+        editForm.style.display = 'none';
+
+        // 댓글 내용 보이기
+        contentElement.style.display = 'inline';
+
+        // 수정된 내용을 서버로 전송하는 코드 추가
+        var boardId = document.getElementById('boardId').value;
+        var data = {
+            boardId: boardId,
+            replyId: replyId,
+            content: editContent
+        };
+
+        $.ajax({
+            type: 'PUT',
+            url: '/board/'+boardId+'/reply/'+replyId,
+            data: data,
+            success: function(response) {
+                // 서버로부터의 응답을 처리
+                console.log(response);
+                // 댓글 수정 후 화면 새로고침
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                // 오류 발생 시 처리
+                console.log(error);
+            }
+        });
+    }
+
+    function cancelEdit(event) {
+        event.preventDefault();
+        var contentElement = document.getElementById('replyId');
+        var editForm = document.getElementById('editReplyForm');
+
+        // 수정 폼 숨기기
+        editForm.style.display = 'none';
+
+        // 댓글 내용 보이기
+        contentElement.style.display = 'inline';
+    }
+
+
+        // 댓글 삭제
+        function deleteReply(e) {
+            e.preventDefault();
+            let replyid = e.target.dataset.replyid;
+            let action = e.target.getAttribute("href");
+            let boardid = [[${boardDto.id}]];
+            if (confirm("정말로 삭제하시겠습니까?")) {
+
+                // DELETE 요청 보내는 코드 작성
+                // 예를 들어, axios 또는 fetch API를 사용하여 DELETE 요청을 보낼 수 있습니다.
+                $.ajax({
+                    url: action,
+                    method: 'delete',
+                    data: {replyid: Number(replyid)},
+                    dataType: 'html',
+                    success: function (res) {
+                        location.href = "/board/" + boardid;
+                        console.log('삭제 성공')
+                        console.log(res);
+                    },
+                    error: function (xhr, status, error) {
+                        // This code will run if the request encounters an error
+                        console.log('Error occurred during the delete request');
+                        console.log('Status: ' + status);
+                        console.log('Error message: ' + error);
+                    }
+                })
+            }
+        }
 </script>
 <!-- Reply Section End -->
 <p class="lead">

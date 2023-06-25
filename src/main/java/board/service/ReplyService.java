@@ -75,9 +75,12 @@ public class ReplyService {
         return null;
     }
 
-    public void editReply(Long replyId, ReplyDto editedReplyDto) {
+    public void editReply(Long boardId, Long replyId, String content) {
         // 리포지토리를 사용하여 replyId에 해당하는 댓글 정보를 가져오고,
+        Board board = boardRepository.findById(boardId).orElseThrow(()->DomainException.notFindRow(boardId));
+        Reply reply = replyRepository.findByBoardAndId(board, replyId).orElseThrow(()-> DomainException.notFindRow(replyId));
         // editedReplyDto의 내용으로 댓글을 수정하는 로직 구현
+        reply.updateReply(content);
     }
 
 }
