@@ -1,20 +1,16 @@
-package board.domain;
+package board.domain.board;
 
-import com.sun.istack.NotNull;
+import board.domain.TimeEntity;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Getter
 @Entity(name = "reply")
 @NoArgsConstructor
-public class Reply extends TimeEntity{
+public class Reply extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,9 +1,8 @@
-package board.controller;
+package board.controller.board;
 
-import board.domain.Reply;
-import board.domain.User;
-import board.dto.ReplyDto;
-import board.service.ReplyService;
+import board.domain.board.Reply;
+import board.domain.board.User;
+import board.service.board.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

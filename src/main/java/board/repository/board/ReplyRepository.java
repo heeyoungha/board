@@ -1,7 +1,7 @@
-package board.repository;
+package board.repository.board;
 
-import board.domain.Board;
-import board.domain.Reply;
+import board.domain.board.Board;
+import board.domain.board.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

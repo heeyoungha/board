@@ -1,19 +1,18 @@
-package board.domain;
+package board.domain.board;
 
+import board.domain.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Board extends TimeEntity{
+public class Board extends TimeEntity {
 
     @Id @GeneratedValue
     private Long id;

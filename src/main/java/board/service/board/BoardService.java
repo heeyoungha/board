@@ -1,11 +1,10 @@
-package board.service;
+package board.service.board;
 
-import board.domain.Board;
-import board.domain.Reply;
-import board.domain.User;
-import board.dto.BoardDto;
+import board.domain.board.Board;
+import board.domain.board.Reply;
+import board.dto.board.BoardDto;
 import board.exception.DomainException;
-import board.repository.BoardRepository;
+import board.repository.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

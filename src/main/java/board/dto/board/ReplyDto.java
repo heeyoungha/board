@@ -1,8 +1,8 @@
-package board.dto;
+package board.dto.board;
 
-import board.domain.Board;
-import board.domain.Reply;
-import board.domain.User;
+import board.domain.board.Board;
+import board.domain.board.Reply;
+import board.domain.board.User;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

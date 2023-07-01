@@ -1,4 +1,4 @@
-package board.domain;
+package board.domain.board;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

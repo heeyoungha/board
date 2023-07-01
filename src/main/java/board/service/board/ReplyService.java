@@ -1,21 +1,19 @@
-package board.service;
+package board.service.board;
 
-import board.domain.Board;
-import board.domain.Reply;
-import board.domain.User;
-import board.dto.BoardDto;
-import board.dto.ReplyDto;
+import board.domain.board.Board;
+import board.domain.board.Reply;
+import board.domain.board.User;
+import board.dto.board.ReplyDto;
 import board.exception.DomainException;
-import board.repository.BoardRepository;
-import board.repository.ReplyRepository;
-import board.repository.UserRepository;
+import board.repository.board.BoardRepository;
+import board.repository.board.ReplyRepository;
+import board.repository.board.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
