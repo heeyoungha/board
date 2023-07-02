@@ -34,4 +34,12 @@ public class StudyController {
         List<StudyResponse> responses = studyService.readStudyList();
         return ResponseEntity.ok(responses);
     }
+
+    @ResponseBody
+    @GetMapping("/{id}")
+    @Operation(summary = "특정 스터디를 조회합니다")
+    public ResponseEntity<StudyResponse> readStudy(@PathVariable Long id){
+        StudyResponse response = studyService.readStudy(id);
+        return ResponseEntity.ok(response);
+    }
 }

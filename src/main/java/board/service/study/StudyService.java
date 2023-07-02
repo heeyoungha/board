@@ -3,6 +3,7 @@ package board.service.study;
 import board.domain.study.Study;
 import board.dto.study.StudyRequest;
 import board.dto.study.StudyResponse;
+import board.exception.DomainException;
 import board.repository.study.StudyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,16 @@ public class StudyService {
                 .collect(Collectors.toList());
 
         return responses;
+    }
+
+    @Transactional
+    public StudyResponse readStudy(Long id) {
+        Study study = studyRepository.findById(id).orElseThrow(()-> DomainException.notFindRow(id));
+
+        StudyResponse response = StudyResponse.builder()
+                .id(study.getId())
+                .studyType(study.getStudyType())
+                .build();
+        return response;
     }
 }
