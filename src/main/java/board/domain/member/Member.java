@@ -1,9 +1,11 @@
 package board.domain.member;
 
 
+import board.domain.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,8 @@ import javax.persistence.Id;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Member {
+@Where(clause = "is_deleted = false")
+public class Member extends TimeEntity {
 
     @Id @GeneratedValue
     private Long id;

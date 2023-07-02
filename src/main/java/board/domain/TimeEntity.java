@@ -22,4 +22,9 @@ public abstract class TimeEntity {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
 
+    private Boolean isDeleted = false;
+
+    public void delete(){
+        this.isDeleted = true;
+    }
 }

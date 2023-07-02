@@ -61,4 +61,12 @@ public class MemberService {
 
         return response;
     }
+
+    @Transactional
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+
+        member.delete();
+    }
 }
