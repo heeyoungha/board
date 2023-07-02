@@ -57,4 +57,11 @@ public class StudyService {
                 .build();
         return response;
     }
+
+    @Transactional
+    public void deleteStudy(Long id) {
+        Study study = studyRepository.findById(id).orElseThrow(()-> DomainException.notFindRow(id));
+
+        study.delete();
+    }
 }

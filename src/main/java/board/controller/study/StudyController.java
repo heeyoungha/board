@@ -6,6 +6,7 @@ import board.service.study.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +42,13 @@ public class StudyController {
     public ResponseEntity<StudyResponse> readStudy(@PathVariable Long id){
         StudyResponse response = studyService.readStudy(id);
         return ResponseEntity.ok(response);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/{id}")
+    @Operation(summary = "특정 스터디를 삭제합니다")
+    public ResponseEntity<StudyResponse> deleteStudy(@PathVariable Long id){
+        studyService.deleteStudy(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

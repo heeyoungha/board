@@ -6,6 +6,7 @@ import board.exception.TypeException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 @Getter
 @NoArgsConstructor
 @Entity
+@Where(clause = "is_deleted = false")
 public class Study extends TimeEntity {
 
     @Id @GeneratedValue
