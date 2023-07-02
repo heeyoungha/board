@@ -9,15 +9,10 @@ import lombok.NoArgsConstructor;
 public class MemberResponse {
 
     private Long id;
-
     private String username;
-
     private String pw;
-
     private int age;
-
     private String interest;
-
     private String address;
 
     @Builder
@@ -27,5 +22,6 @@ public class MemberResponse {
         this.username = username;
         this.pw = pw;
         this.interest = interest;
+        this.age = age;
     }
 }
