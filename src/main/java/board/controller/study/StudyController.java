@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/study")
@@ -23,5 +25,13 @@ public class StudyController {
     public ResponseEntity<StudyResponse> createStudy(@RequestBody StudyRequest request){
         StudyResponse response = studyService.createStudy(request);
         return ResponseEntity.ok(response);
+    }
+
+    @ResponseBody
+    @GetMapping
+    @Operation(summary = "스터디 리스트를 조회합니다")
+    public ResponseEntity<List<StudyResponse>> readStudyList(){
+        List<StudyResponse> responses = studyService.readStudyList();
+        return ResponseEntity.ok(responses);
     }
 }

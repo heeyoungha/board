@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class StudyService {
@@ -29,5 +33,16 @@ public class StudyService {
 
 
         return response;
+    }
+
+//    @Transactional
+    public List<StudyResponse> readStudyList() {
+        List<StudyResponse> responses = new ArrayList<>();
+
+        responses = studyRepository.findAll().stream()
+                .map(StudyResponse::toStudyResponse)
+                .collect(Collectors.toList());
+
+        return responses;
     }
 }
