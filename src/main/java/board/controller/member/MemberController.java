@@ -35,4 +35,11 @@ public class MemberController extends TimeEntity {
         return ResponseEntity.ok(members);
     }
 
+    @ResponseBody
+    @GetMapping("/member/{id}")
+    @Operation(summary = "특정 멤버를 조회합니다")
+    public ResponseEntity<MemberResponse> readMember(@PathVariable Long id){
+        MemberResponse response = memberService.readMember(id);
+        return ResponseEntity.ok(response);
+    }
 }

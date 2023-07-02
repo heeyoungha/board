@@ -3,6 +3,7 @@ package board.service.member;
 import board.domain.member.Member;
 import board.dto.member.MemberRequest;
 import board.dto.member.MemberResponse;
+import board.exception.DomainException;
 import board.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,9 +48,17 @@ public class MemberService {
         List<MemberResponse> members = new ArrayList<>();
         members = memberRepository.findAll()
                     .stream()
-                    .map(Member::toMemberResponse)
+                    .map(MemberResponse::toMemberResponse)
                     .collect(Collectors.toList());
         return members;
     }
 
+    public MemberResponse readMember(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+
+        MemberResponse response = MemberResponse.toMemberResponse(member);
+
+        return response;
+    }
 }
