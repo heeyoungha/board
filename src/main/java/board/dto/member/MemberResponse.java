@@ -1,5 +1,6 @@
 package board.dto.member;
 
+import board.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,18 @@ public class MemberResponse {
         this.pw = pw;
         this.interest = interest;
         this.age = age;
+    }
+
+    public static MemberResponse toMemberResponse(Member member){
+        MemberResponse m = MemberResponse.builder()
+                .age(member.getAge())
+                .pw(member.getPw())
+                .interest(member.getInterest())
+                .id(member.getId())
+                .username(member.getUsername())
+                .address(member.getAddress())
+                .build();
+
+        return m;
     }
 }
