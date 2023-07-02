@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -37,4 +41,15 @@ public class MemberService {
         return response;
 
     }
+
+    @Transactional
+    public List<MemberResponse> readMemberList() {
+        List<MemberResponse> members = new ArrayList<>();
+        members = memberRepository.findAll()
+                    .stream()
+                    .map(Member::toMemberResponse)
+                    .collect(Collectors.toList());
+        return members;
+    }
+
 }
