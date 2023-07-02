@@ -1,6 +1,8 @@
 package board.domain.study;
 
 import board.domain.TimeEntity;
+import board.domain.study.type.StudyType;
+import board.exception.TypeException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,19 @@ public class Study extends TimeEntity {
     @Id @GeneratedValue
     private Long id;
 
-    private String study;
+    private StudyType studyType;
 
     @Builder
     public Study(String study){
-        this.study = study;
+        //this.study = study;
+        try{
+            this.studyType = StudyType.valueOf(study);
+        } catch(IllegalArgumentException e){
+            throw TypeException.of("스터디", study);
+        }
+    }
+
+    public String getStudyType(){
+        return studyType.name();
     }
 }

@@ -24,7 +24,7 @@ public class StudyService {
 
         StudyResponse response = StudyResponse.builder()
                 .id(study.getId())
-                .study(study.getStudy())
+                .studyType(study.getStudyType())
                 .build();
 
 

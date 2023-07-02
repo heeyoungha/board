@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 public class StudyResponse {
 
     private Long id;
-    private String study;
+    private String studyType;
 
     @Builder
-    public StudyResponse(String study, Long id){
+    public StudyResponse(String studyType, Long id){
         this.id = id;
-        this.study = study;
+        this.studyType = studyType;
     }
 }
