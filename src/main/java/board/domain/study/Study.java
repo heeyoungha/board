@@ -1,6 +1,7 @@
 package board.domain.study;
 
 import board.domain.TimeEntity;
+import board.domain.project.Project;
 import board.domain.study.type.StudyType;
 import board.exception.TypeException;
 import lombok.Builder;
@@ -8,9 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +23,9 @@ public class Study extends TimeEntity {
     private Long id;
 
     private StudyType studyType;
+
+    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    private List<Project> projects = new ArrayList<>();
 
     @Builder
     public Study(String study){

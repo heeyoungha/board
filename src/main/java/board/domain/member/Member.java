@@ -2,14 +2,15 @@ package board.domain.member;
 
 
 import board.domain.TimeEntity;
+import board.domain.project.Project;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -29,6 +30,9 @@ public class Member extends TimeEntity {
     private String interest;
 
     private String address;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Project> projects = new ArrayList<>();
 
     @Builder
     public Member(String username, String pw, int age, String interest, String address){
