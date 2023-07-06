@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/project")
@@ -19,6 +21,21 @@ public class ProjectController {
     @Operation(summary = "프로젝트를 생성합니다")
     public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest request){
         ProjectResponse response = projectService.createProject(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @ResponseBody
+    @GetMapping("/{id}")
+    @Operation(summary = "프로젝트를 조회합니다")
+    public ResponseEntity<ProjectResponse> readProject(@PathVariable Long id){
+        ProjectResponse response = projectService.readProject(id);
+        return ResponseEntity.ok(response);
+    }
+    @ResponseBody
+    @GetMapping
+    @Operation(summary = "프로젝트 리스트를 조회합니다")
+    public ResponseEntity<List<ProjectResponse>> readProjectList(){
+        List<ProjectResponse> response = projectService.readProjectList();
         return ResponseEntity.ok(response);
     }
 }

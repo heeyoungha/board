@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -32,5 +35,25 @@ public class ProjectService {
         projectRepository.save(project);
 
         return new ProjectResponse(project);
+    }
+
+    @Transactional
+    public ProjectResponse readProject(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+        ProjectResponse response = new ProjectResponse(project);
+
+        return response;
+    }
+
+    @Transactional
+    public List<ProjectResponse> readProjectList() {
+
+        List<ProjectResponse> response = projectRepository.findAll()
+                .stream()
+                .map(ProjectResponse::new)
+                .collect(Collectors.toList());
+
+        return response;
     }
 }

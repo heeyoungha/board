@@ -22,4 +22,5 @@ public class ProjectResponse {
         this.study = project.getStudy();
         this.userName = project.userName();
     }
+
 }
