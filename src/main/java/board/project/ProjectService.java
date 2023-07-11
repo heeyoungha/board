@@ -56,4 +56,11 @@ public class ProjectService {
 
         return response;
     }
+
+    @Transactional
+    public void deleteProject(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+        project.delete();
+    }
 }

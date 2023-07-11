@@ -3,6 +3,7 @@ package board.project;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +38,12 @@ public class ProjectController {
     public ResponseEntity<List<ProjectResponse>> readProjectList(){
         List<ProjectResponse> response = projectService.readProjectList();
         return ResponseEntity.ok(response);
+    }
+    @ResponseBody
+    @DeleteMapping("/{id}")
+    @Operation(summary = "프로젝트를 삭제합니다")
+    public ResponseEntity<ProjectResponse> deleteProject(@PathVariable Long id){
+        projectService.deleteProject(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

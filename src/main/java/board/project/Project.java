@@ -1,16 +1,19 @@
 package board.project;
 
+import board.TimeEntity;
 import board.member.Member;
 import board.study.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class Project {
+@Where(clause = "is_deleted = false")
+public class Project extends TimeEntity {
 
     @Id @GeneratedValue
     private Long id;
