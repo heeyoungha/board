@@ -19,11 +19,11 @@ public class MemberService {
     public MemberResponse createMember(MemberRequest request) {
 
         Member member = Member.builder()
-                .address(request.getAddress())
                 .pw(request.getPw())
                 .age(request.getAge())
                 .username(request.getUsername())
                 .interest(request.getInterest())
+//                .address(new Address(request.getAddress1(),request.getAddress2())
                 .build();
         memberRepository.save(member);
 

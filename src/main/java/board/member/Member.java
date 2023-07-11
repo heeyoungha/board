@@ -6,6 +6,8 @@ import board.project.Project;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Delegate;
+import org.apache.tomcat.jni.Address;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -29,13 +31,15 @@ public class Member extends TimeEntity {
 
     private String interest;
 
-    private String address;
+    @Embedded
+    @Delegate
+    private Address address = new Address();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Project> projects = new ArrayList<>();
 
     @Builder
-    public Member(String username, String pw, int age, String interest, String address){
+    public Member(String username, String pw, int age, String interest, Address address){
         this.username = username;
         this.pw = pw;
         this.interest = interest;

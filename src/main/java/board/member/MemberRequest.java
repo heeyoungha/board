@@ -17,6 +17,10 @@ public class MemberRequest {
 
     private String interest;
 
-    private String address;
+    private String address1;
+
+    private String address2;
+
+    private String zipcode;
 
 }

@@ -13,11 +13,12 @@ public class MemberResponse {
     private String pw;
     private int age;
     private String interest;
-    private String address;
+    private String address1;
+    private String address2;
 
     @Builder
     public MemberResponse(Member member){
-        this.address = member.getAddress();
+//        this.address1 = member.getAddress1();
         this.id = member.getId();
         this.username = member.getUsername();
         this.pw = member.getPw();
