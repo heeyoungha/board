@@ -2,6 +2,7 @@ package board.project;
 
 import board.TimeEntity;
 import board.member.Member;
+import board.member.type.Bookmark;
 import board.study.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,12 +31,16 @@ public class Project extends TimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static Project of(String title, String startdate, Study study, Member member){
+    @Convert(converter = Bookmark.BookmarkConverter.class)
+    private Bookmark bookmark;
+
+    public static Project of(String title, String startdate, Study study, Member member, int bookmark){
         Project project = new Project();
         project.title = title;
         project.startdate = startdate;
         project.study = study;
         project.member = member;
+        project.bookmark = new Bookmark(bookmark);
         return project;
     }
 
@@ -44,5 +49,9 @@ public class Project extends TimeEntity {
     }
     public String userName(){
         return member.getUsername();
+    }
+
+    public Integer getBookmark(){
+        return bookmark.getBookmark();
     }
 }

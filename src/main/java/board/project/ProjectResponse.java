@@ -15,12 +15,15 @@ public class ProjectResponse {
 
     private String userName;
 
+    private int bookmark;
+
     public ProjectResponse(Project project){
         this.id = project.getId();
         this.startdate= project.getStartdate();
         this.title = project.getTitle();
         this.study = project.getStudy();
         this.userName = project.userName();
+        this.bookmark = project.getBookmark();
     }
 
 }

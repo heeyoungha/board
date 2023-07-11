@@ -48,4 +48,13 @@ public class MemberController extends TimeEntity {
         memberService.deleteMember(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @ResponseBody
+    @GetMapping("/member/{id}/average-bookmark")
+    @Operation(summary = "멤버 평균 북마크 횟수를 조회합니다")
+    public ResponseEntity<BookmarkResponse> getMemberAverageBookmark(@PathVariable Long id){
+        BookmarkResponse response = memberService.getBookmarkAverageBookmark(id);
+
+        return ResponseEntity.ok(response);
+    }
 }

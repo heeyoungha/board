@@ -47,4 +47,15 @@ public class Member extends TimeEntity {
         this.age = age;
     }
 
+//    public String getAddress1(){
+//        return address.
+//    }
+
+    public double getBookmarkAverageBookmark() {
+        return projects.stream()
+                .mapToInt(Project::getBookmark)
+                .average()
+                .orElseThrow();
+    }
+
 }

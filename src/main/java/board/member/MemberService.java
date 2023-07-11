@@ -57,4 +57,16 @@ public class MemberService {
 
         member.delete();
     }
+
+    @Transactional
+    public BookmarkResponse getBookmarkAverageBookmark(Long id){
+
+        Member member = memberRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+
+        return BookmarkResponse.builder()
+                .bookmark(member.getBookmarkAverageBookmark())
+                .userName(member.getUsername())
+                .build();
+    }
 }

@@ -16,6 +16,7 @@ public class ProjectRequest {
 
     private String userName;
 
+    private int bookmark;
     public StudyType getStudyType(){
         return StudyType.valueOf(study);
     }
