@@ -26,16 +26,8 @@ public class MemberService {
                 .interest(request.getInterest())
                 .build();
         memberRepository.save(member);
-        MemberResponse response = MemberResponse.builder()
-                .address(member.getAddress())
-                .username(member.getUsername())
-                .id(member.getId())
-                .interest(member.getInterest())
-                .pw(member.getPw())
-                .age(member.getAge())
-                .build();
 
-        return response;
+        return new MemberResponse(member);
 
     }
 
@@ -44,7 +36,7 @@ public class MemberService {
         List<MemberResponse> members = new ArrayList<>();
         members = memberRepository.findAll()
                     .stream()
-                    .map(MemberResponse::toMemberResponse)
+                    .map(MemberResponse::new)
                     .collect(Collectors.toList());
         return members;
     }
@@ -53,7 +45,7 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(()-> DomainException.notFindRow(id));
 
-        MemberResponse response = MemberResponse.toMemberResponse(member);
+        MemberResponse response = new MemberResponse(member);
 
         return response;
     }

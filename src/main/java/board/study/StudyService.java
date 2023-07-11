@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,21 +22,13 @@ public class StudyService {
 
         studyRepository.save(study);
 
-        StudyResponse response = StudyResponse.builder()
-                .id(study.getId())
-                .studyType(study.getStudyType())
-                .build();
-
-
-        return response;
+        return new StudyResponse(study);
     }
 
 //    @Transactional
     public List<StudyResponse> readStudyList() {
-        List<StudyResponse> responses = new ArrayList<>();
-
-        responses = studyRepository.findAll().stream()
-                .map(StudyResponse::toStudyResponse)
+        List<StudyResponse> responses = studyRepository.findAll().stream()
+                .map(StudyResponse::new)
                 .collect(Collectors.toList());
 
         return responses;
@@ -47,10 +38,8 @@ public class StudyService {
     public StudyResponse readStudy(Long id) {
         Study study = studyRepository.findById(id).orElseThrow(()-> DomainException.notFindRow(id));
 
-        StudyResponse response = StudyResponse.builder()
-                .id(study.getId())
-                .studyType(study.getStudyType())
-                .build();
+        StudyResponse response = new StudyResponse(study);
+
         return response;
     }
 

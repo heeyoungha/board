@@ -12,17 +12,9 @@ public class StudyResponse {
     private String studyType;
 
     @Builder
-    public StudyResponse(String studyType, Long id){
-        this.id = id;
-        this.studyType = studyType;
+    public StudyResponse(Study study){
+        this.id = study.getId();
+        this.studyType = study.getStudyType();
     }
 
-    public static StudyResponse toStudyResponse(Study study){
-        StudyResponse studyResponse = StudyResponse.builder()
-                .studyType(study.getStudyType())
-                .id(study.getId())
-                .build();
-
-        return studyResponse;
-    }
 }
