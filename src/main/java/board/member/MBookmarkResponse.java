@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookmarkResponse {
+public class MBookmarkResponse {
     private String userName;
     private Double bookmark;
 }

@@ -59,12 +59,12 @@ public class MemberService {
     }
 
     @Transactional
-    public BookmarkResponse getBookmarkAverageBookmark(Long id){
+    public MBookmarkResponse getBookmarkAverageBookmark(Long id){
 
         Member member = memberRepository.findById(id)
                 .orElseThrow(()-> DomainException.notFindRow(id));
 
-        return BookmarkResponse.builder()
+        return MBookmarkResponse.builder()
                 .bookmark(member.getBookmarkAverageBookmark())
                 .userName(member.getUsername())
                 .build();

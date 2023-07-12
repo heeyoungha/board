@@ -40,4 +40,11 @@ public class Study extends TimeEntity {
     public String getStudyType(){
         return studyType.name();
     }
+
+    public double getAverageBookmark(){
+        return projects.stream()
+                .mapToInt(Project::getBookmark)
+                .average()
+                .orElseThrow();
+    }
 }

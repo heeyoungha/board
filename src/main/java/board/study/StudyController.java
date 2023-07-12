@@ -48,4 +48,12 @@ public class StudyController {
         studyService.deleteStudy(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @ResponseBody
+    @GetMapping("/{id}/average-bookmark")
+    @Operation(summary = "스터디 평균 북마크 횟수를 조회합니다")
+    public ResponseEntity<SBookmarkResponse> getAverageBookmark(@PathVariable Long id){
+        SBookmarkResponse response = studyService.getAverageBookmark(id);
+        return ResponseEntity.ok(response);
+    }
 }

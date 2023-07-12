@@ -49,4 +49,12 @@ public class StudyService {
 
         study.delete();
     }
+
+    public SBookmarkResponse getAverageBookmark(Long id) {
+        Study study = studyRepository.findById(id).orElseThrow(()-> DomainException.notFindRow(id));
+        return SBookmarkResponse.builder()
+                .bookmark(study.getAverageBookmark())
+                .studyType(study.getStudyType())
+                .build();
+    }
 }
