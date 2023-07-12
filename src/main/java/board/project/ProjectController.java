@@ -20,7 +20,7 @@ public class ProjectController {
     @ResponseBody
     @PostMapping
     @Operation(summary = "프로젝트를 생성합니다")
-    public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest request){
+    public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest.CreateProjectRequest request){
         ProjectResponse response = projectService.createProject(request);
         return ResponseEntity.ok(response);
     }
@@ -45,5 +45,15 @@ public class ProjectController {
     public ResponseEntity<ProjectResponse> deleteProject(@PathVariable Long id){
         projectService.deleteProject(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ResponseBody
+    @PatchMapping("/{id}")
+    @Operation(summary = "프로젝트를 수정합니다")
+    public ResponseEntity<Void> updateProject(
+            @PathVariable Long id,
+            @RequestBody ProjectRequest.UpdateProjectRequest request){
+        projectService.updateService(id, request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

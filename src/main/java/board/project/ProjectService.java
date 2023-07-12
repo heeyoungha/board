@@ -22,7 +22,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
 
     @Transactional
-    public ProjectResponse createProject(ProjectRequest request) {
+    public ProjectResponse createProject(ProjectRequest.CreateProjectRequest request) {
 
         Study study = studyRepository.findByStudyType(request.getStudyType())
                 .orElseThrow(()-> DomainException.notFindRow(request.getStudy()));
@@ -62,5 +62,17 @@ public class ProjectService {
         Project project = projectRepository.findById(id)
                 .orElseThrow(()-> DomainException.notFindRow(id));
         project.delete();
+    }
+
+    @Transactional
+    public void updateService(Long id, ProjectRequest.UpdateProjectRequest request) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+
+        project.updateProject(request.getTitle(), request.getStartdate());
+
+
+        //projectRepository.save(project);
+        //return new ProjectResponse(project);
     }
 }

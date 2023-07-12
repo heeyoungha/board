@@ -54,4 +54,9 @@ public class Project extends TimeEntity {
     public Integer getBookmark(){
         return bookmark.getBookmark();
     }
+
+    public void updateProject(String title, String startdate) {
+        this.title = title;
+        this.startdate = startdate;
+    }
 }
