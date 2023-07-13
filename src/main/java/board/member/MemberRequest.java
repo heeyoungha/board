@@ -23,4 +23,12 @@ public class MemberRequest {
 
     private String zipcode;
 
+    public MemberRequest(String username, String pw, int age, String interest,String address ){
+        this.username = username;
+        this.pw = pw;
+        this.age = age;
+        this.interest = interest;
+        this.address1 = address;
+    }
+
 }
