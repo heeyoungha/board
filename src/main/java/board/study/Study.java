@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@Audited
+@AuditOverride(forClass=TimeEntity.class)
 @Where(clause = "is_deleted = false")
 public class Study extends TimeEntity {
 

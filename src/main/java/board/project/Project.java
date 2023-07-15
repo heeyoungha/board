@@ -7,11 +7,13 @@ import board.study.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@Audited
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Project extends TimeEntity {

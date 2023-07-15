@@ -9,13 +9,20 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Delegate;
 import org.apache.tomcat.jni.Address;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Getter
 @Entity
+@Audited(targetAuditMode = NOT_AUDITED)
+@AuditOverride(forClass=TimeEntity.class)
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Member extends TimeEntity {
@@ -27,6 +34,7 @@ public class Member extends TimeEntity {
 
     private String pw;
 
+    @NotAudited
     private int age;
 
     private String interest;
