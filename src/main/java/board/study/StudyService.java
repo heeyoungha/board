@@ -1,5 +1,6 @@
 package board.study;
 
+import board.SampleLogTest;
 import board.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class StudyService {
 
     private final StudyRepository studyRepository;
+    private final SampleLogTest sampleLogTest;
 
     @Transactional
     public StudyResponse createStudy(StudyRequest request) {
@@ -21,6 +23,7 @@ public class StudyService {
                 .build();
 
         studyRepository.save(study);
+        sampleLogTest.testLog();
 
         return new StudyResponse(study);
     }

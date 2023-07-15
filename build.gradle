@@ -34,6 +34,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.rest-assured:rest-assured:3.3.0'
 
+	//security
+	implementation 'com.github.maricn:logback-slack-appender:1.4.0'
+
+
 }
 
 tasks.named('test') {
