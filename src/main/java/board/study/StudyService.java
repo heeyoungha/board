@@ -1,8 +1,8 @@
 package board.study;
 
-import board.SampleLogTest;
 import board.exception.DomainException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StudyService {
 
     private final StudyRepository studyRepository;
-    private final SampleLogTest sampleLogTest;
 
     @Transactional
     public StudyResponse createStudy(StudyRequest request) {
@@ -23,7 +23,7 @@ public class StudyService {
                 .build();
 
         studyRepository.save(study);
-        sampleLogTest.testLog();
+        log.info("신규스터디[{}]이/가 등록되었습니다!", request.getStudy());
 
         return new StudyResponse(study);
     }
