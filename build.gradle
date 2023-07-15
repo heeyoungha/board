@@ -20,7 +20,6 @@ repositories {
 
 dependencies {
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
 	implementation 'com.mysql:mysql-connector-j'
@@ -29,6 +28,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	//DB
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	//test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
