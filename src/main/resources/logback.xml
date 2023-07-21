@@ -14,7 +14,7 @@
                 [%thread] %-5level %n%msg%n
             </pattern>
         </layout>
-        <webhookUri>https://hooks.slack.com/services/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</webhookUri>
+        <webhookUri>https://hooks.slack.com/services/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</webhookUri>
         <username>hee</username>
         <channel>study</channel>
         <iconEmoji>:bell:</iconEmoji>
@@ -23,12 +23,14 @@
 
 <!--    로그 메시지 전달, 특정 클래스에 특정 레벨 이상인 것에 대해 출력-->
     <logger name="board.study.StudyService" level="info" additivity="true">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="SLACK" />
     </logger>
 
-<!--    <logger name="board.aop.RequestLoggingAspect" level="info" additivity="true">-->
-<!--        <appender-ref ref="SLACK" />-->
-<!--    </logger>-->
+-    <logger name="board.aop.RequestLoggingAspect" level="info" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="SLACK" />
+    </logger>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
