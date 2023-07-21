@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "member v1 API")
+@Tag(name = "member v1 API", description = "멤버를 관리하는 API")
 public class MemberController extends TimeEntity {
 
     private final MemberService memberService;
