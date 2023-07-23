@@ -1,7 +1,7 @@
 package board.member;
 
 
-import board.TimeEntity;
+import board.BaseEntity;
 import board.project.Project;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,10 +22,10 @@ import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 @Getter
 @Entity
 @Audited(targetAuditMode = NOT_AUDITED)
-@AuditOverride(forClass=TimeEntity.class)
+@AuditOverride(forClass= BaseEntity.class)
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
-public class Member extends TimeEntity {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;

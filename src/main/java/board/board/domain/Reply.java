@@ -1,6 +1,6 @@
 package board.board.domain;
 
-import board.TimeEntity;
+import board.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity(name = "reply")
 @NoArgsConstructor
-public class Reply extends TimeEntity {
+public class Reply extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

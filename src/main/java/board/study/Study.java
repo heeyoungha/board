@@ -1,6 +1,6 @@
 package board.study;
 
-import board.TimeEntity;
+import board.BaseEntity;
 import board.exception.TypeException;
 import board.project.Project;
 import board.study.type.StudyType;
@@ -19,9 +19,9 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Audited
-@AuditOverride(forClass=TimeEntity.class)
+@AuditOverride(forClass= BaseEntity.class)
 @Where(clause = "is_deleted = false")
-public class Study extends TimeEntity {
+public class Study extends BaseEntity {
 
     @Id @GeneratedValue
     private Long id;

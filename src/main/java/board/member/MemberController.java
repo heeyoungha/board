@@ -1,6 +1,6 @@
 package board.member;
 
-import board.TimeEntity;
+import board.BaseEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +12,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "member v1 API")
-public class MemberController extends TimeEntity {
+@Tag(name = "member v1 API", description = "회원를 관리하는 API")
+public class MemberController extends BaseEntity {
 
     private final MemberService memberService;
 

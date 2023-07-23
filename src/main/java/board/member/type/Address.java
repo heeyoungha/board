@@ -18,7 +18,6 @@ public class Address {
     public Address(String address1, String address2){
         this.address1 = address1;
         this.address2 = address2;
-        this.zipcode = zipcode;
     }
 
     @Builder
