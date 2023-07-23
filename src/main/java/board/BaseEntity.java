@@ -24,8 +24,6 @@ public abstract class BaseEntity {
 
     private Boolean isDeleted = false;
 
-    private int bookmark;
-
     public void delete(){
         this.isDeleted = true;
     }
