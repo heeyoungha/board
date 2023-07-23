@@ -12,14 +12,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "member v1 API", description = "멤버를 관리하는 API")
+@Tag(name = "member v1 API", description = "회원를 관리하는 API")
 public class MemberController extends TimeEntity {
 
     private final MemberService memberService;
 
     @ResponseBody
     @PostMapping("/member")
-    @Operation(summary = "멤버를 생성합니다")
+    @Operation(summary = "회원을 생성합니다 ➕ ")
     public ResponseEntity<MemberResponse> createMember(@RequestBody MemberRequest request){
         MemberResponse response = memberService.createMember(request);
         return ResponseEntity.ok(response);
@@ -27,7 +27,7 @@ public class MemberController extends TimeEntity {
 
     @ResponseBody
     @GetMapping("/member")
-    @Operation(summary = "멤버를 전부 조회합니다")
+    @Operation(summary = "회원 리스트를 전부 조회합니다 🔍 [ ]")
     public ResponseEntity<List<MemberResponse>> readMemberList(){
         List<MemberResponse> members = memberService.readMemberList();
         return ResponseEntity.ok(members);
@@ -35,7 +35,7 @@ public class MemberController extends TimeEntity {
 
     @ResponseBody
     @GetMapping("/member/{id}")
-    @Operation(summary = "특정 멤버를 조회합니다")
+    @Operation(summary = "특정 회원을 조회합니다 🔍 M ")
     public ResponseEntity<MemberResponse> readMember(@PathVariable Long id){
         MemberResponse response = memberService.readMember(id);
         return ResponseEntity.ok(response);
@@ -43,7 +43,7 @@ public class MemberController extends TimeEntity {
 
     @ResponseBody
     @DeleteMapping("/member/{id}")
-    @Operation(summary = "특정 멤버를 삭제합니다")
+    @Operation(summary = "특정 회원을 삭제합니다 🗑 ")
     public ResponseEntity<MemberResponse> deleteMember(@PathVariable Long id){
         memberService.deleteMember(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -51,7 +51,7 @@ public class MemberController extends TimeEntity {
 
     @ResponseBody
     @GetMapping("/member/{id}/average-bookmark")
-    @Operation(summary = "멤버 평균 북마크 횟수를 조회합니다")
+    @Operation(summary = "회원 평균 북마크를 조회합니다 🔍🔰")
     public ResponseEntity<MBookmarkResponse> getMemberAverageBookmark(@PathVariable Long id){
         MBookmarkResponse response = memberService.getBookmarkAverageBookmark(id);
 

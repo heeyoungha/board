@@ -12,14 +12,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/project")
-@Tag(name = "project V1 API")
+@Tag(name = "project V1 API", description = "프로젝트를 관리하는 API")
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @ResponseBody
     @PostMapping
-    @Operation(summary = "프로젝트를 생성합니다")
+    @Operation(summary = "프로젝트를 생성합니다 ➕ ")
     public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest.CreateProjectRequest request){
         ProjectResponse response = projectService.createProject(request);
         return ResponseEntity.ok(response);
@@ -27,21 +27,21 @@ public class ProjectController {
 
     @ResponseBody
     @GetMapping("/{id}")
-    @Operation(summary = "프로젝트를 조회합니다")
+    @Operation(summary = "특정 프로젝트를 조회합니다 🔍 ")
     public ResponseEntity<ProjectResponse> readProject(@PathVariable Long id){
         ProjectResponse response = projectService.readProject(id);
         return ResponseEntity.ok(response);
     }
     @ResponseBody
     @GetMapping
-    @Operation(summary = "프로젝트 리스트를 조회합니다")
+    @Operation(summary = "프로젝트 리스트를 모두 조회합니다 🔍 [ ]")
     public ResponseEntity<List<ProjectResponse>> readProjectList(){
         List<ProjectResponse> response = projectService.readProjectList();
         return ResponseEntity.ok(response);
     }
     @ResponseBody
     @DeleteMapping("/{id}")
-    @Operation(summary = "프로젝트를 삭제합니다")
+    @Operation(summary = "프로젝트를 삭제합니다 🗑 ")
     public ResponseEntity<ProjectResponse> deleteProject(@PathVariable Long id){
         projectService.deleteProject(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -49,7 +49,7 @@ public class ProjectController {
 
     @ResponseBody
     @PatchMapping("/{id}")
-    @Operation(summary = "프로젝트를 수정합니다")
+    @Operation(summary = "프로젝트를 수정합니다 ♻️ ")
     public ResponseEntity<Void> updateProject(
             @PathVariable Long id,
             @RequestBody ProjectRequest.UpdateProjectRequest request){
