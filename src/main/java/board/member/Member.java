@@ -2,6 +2,7 @@ package board.member;
 
 
 import board.BaseEntity;
+import board.board.domain.Reply;
 import board.project.Project;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +46,11 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Project> projects = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Reply> replyList;
+
+    //메소드
 
     @Builder
     public Member(String username, String pw, int age, String interest, Address address){

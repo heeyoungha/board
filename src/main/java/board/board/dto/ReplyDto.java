@@ -2,7 +2,7 @@ package board.board.dto;
 
 import board.board.domain.Board;
 import board.board.domain.Reply;
-import board.board.domain.User;
+import board.member.Member;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +20,10 @@ public class ReplyDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public Reply toEntity(Board board, User user, String content){
+    public Reply toEntity(Board board, Member member, String content){
         Reply build = Reply.builder()
                 .content(content)
-                .user(user)
+                .member(member)
                 .board(board)
                 .build();
         return build;

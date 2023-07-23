@@ -1,8 +1,8 @@
 package board.board.controller;
 
 import board.board.domain.Reply;
-import board.board.domain.User;
 import board.board.service.ReplyService;
+import board.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ReplyController {
     public String createReply(@PathVariable("boardId") Long boardId,
                               @RequestParam("content") String content,
                               //name 속성에는 세션에 저장된 속성의 이름을, required 속성에는 해당 속성이 반드시 필요한지 여부를 지정
-                              @SessionAttribute(name = "user", required = false) User user, Model model){
+                              @SessionAttribute(name = "user", required = false) Member user, Model model){
         List<Reply> replyList = replyService.createReply(content, user, boardId);
         model.addAttribute("replyList", replyList);
         return "redirect:/board/{boardId}";

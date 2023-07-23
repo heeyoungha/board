@@ -2,12 +2,11 @@ package board.board.service;
 
 import board.board.domain.Board;
 import board.board.domain.Reply;
-import board.board.domain.User;
 import board.board.dto.ReplyDto;
 import board.board.repository.BoardRepository;
 import board.board.repository.ReplyRepository;
-import board.board.repository.UserRepository;
 import board.exception.DomainException;
+import board.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +25,7 @@ public class ReplyService {
     @Autowired
     private final BoardRepository boardRepository;
 
-    @Autowired
-    private final UserRepository userRepository;
-
-    public List<Reply> createReply(String content, User userRe, Long boardId){
+    public List<Reply> createReply(String content, Member userRe, Long boardId){
 
 //        User user = userRepository.findById(userRe.getId())
 //                .orElseThrow(()-> DomainException.notFindRow(userRe.getId()));
