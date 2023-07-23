@@ -6,13 +6,17 @@ import board.study.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Getter
 @Entity
-@Audited
+@Audited(targetAuditMode = NOT_AUDITED)
+@AuditOverride(forClass= BaseEntity.class)
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Project extends BaseEntity {
@@ -23,6 +27,8 @@ public class Project extends BaseEntity {
     private String title;
 
     private String startdate;
+
+    private int bookmark;
 
     @ManyToOne
     @JoinColumn(name = "study_id")
@@ -49,7 +55,7 @@ public class Project extends BaseEntity {
     }
 
     public int getBookmark(){
-        return this.getBookmark();
+        return this.bookmark;
     }
 
     public void updateProject(String title, String startdate) {
