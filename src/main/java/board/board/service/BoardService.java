@@ -42,6 +42,10 @@ public class BoardService {
 
     //검색
     public Page<BoardDto> boardSearchList(String searchKeyword, Pageable pageable){
+        if(searchKeyword == null){
+            return getBoardList(pageable);
+        }
+
         Page<Board> boards =  boardRepository.findByTitleContaining(searchKeyword, pageable);
         List<BoardDto> boardDtoList = new ArrayList<>();
 

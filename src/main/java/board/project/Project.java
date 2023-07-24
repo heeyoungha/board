@@ -36,13 +36,12 @@ public class Project extends TimeEntity {
     @Convert(converter = Bookmark.BookmarkConverter.class)
     private Bookmark bookmark;
 
-    public static Project of(String title, String startdate, Study study, Member member, int bookmark){
+    public static Project of(String title, String startdate, Study study, Member member){
         Project project = new Project();
         project.title = title;
         project.startdate = startdate;
         project.study = study;
         project.member = member;
-        project.bookmark = new Bookmark(bookmark);
         return project;
     }
 

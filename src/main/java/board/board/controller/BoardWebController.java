@@ -3,8 +3,6 @@ package board.board.controller;
 import board.board.domain.Reply;
 import board.board.dto.BoardDto;
 import board.board.service.BoardService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,13 +18,11 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Tag(name = "board v1 API", description = "게시판 관리하는 API")
-public class BoardController {
+public class BoardWebController {
 
     private final BoardService boardService;
 
     @GetMapping(value = {"/boardList","/"})
-    @Operation(summary = "게시판 페이지를 조회합니다 🔍 📋 ")
     public String list(Model model,
                        @PageableDefault(page = 0, size = 10, sort = "id",
                                direction = Sort.Direction.DESC)
@@ -59,20 +55,17 @@ public class BoardController {
 
 
     @GetMapping("/board")
-    @Operation(summary = "게시판 생성 페이지를 조회합니다 🔍 ➕ 📄 ")
     public String getCreateBoard(){
         return "create-board.html";
     }
 
     @PostMapping("/board")
-    @Operation(summary = "게시글을 생성합니다 ➕ ")
     public String createBoard(BoardDto dto) {
         boardService.savePost(dto);
         return "redirect:/boardList";
     }
 
     @GetMapping("/board/{boardId}")
-    @Operation(summary = "특정 게시글을 조회합니다 🔍 📄 ")
     public String detail(@PathVariable("boardId") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
         List<Reply> replyList = boardService.getReplyList(id);
@@ -83,7 +76,6 @@ public class BoardController {
     }
 
     @GetMapping("/board/edit/{boardId}")
-    @Operation(summary = "게시글 수정페이지를 조회합니다 🔍 ♻️ ")
     public String editBoard(@PathVariable("boardId") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("boardDto", boardDto);
@@ -97,13 +89,11 @@ public class BoardController {
 //    }
 
     @PostMapping(value = "/board/edit/{boardId}")
-    @Operation(summary = "게시글 수정페이지를 생성합니다 ➕ ♻️ ")
     public String editBoard(@PathVariable("boardId") Long boardId, BoardDto dto){
         boardService.savePost(dto);
         return "redirect:/";
     }
     @PostMapping("/board/delete")
-    @Operation(summary = "게시글을 삭제합니다 🗑 ")
     public String delete(Long id){
         boardService.deletePost(id);
         return "redirect:/";

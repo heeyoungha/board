@@ -30,7 +30,7 @@ public class ProjectService {
         Member member = memberRepository.findByUsername(request.getUserName())
                 .orElseThrow(()->DomainException.notFindRow(request.getUserName()));
 
-        Project project = Project.of(request.getTitle(), request.getStartdate(), study, member, request.getBookmark());
+        Project project = Project.of(request.getTitle(), request.getStartdate(), study, member);
 
         projectRepository.save(project);
 
