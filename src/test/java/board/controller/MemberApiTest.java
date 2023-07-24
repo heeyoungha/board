@@ -27,6 +27,7 @@ public class MemberApiTest extends AcceptanceTest {
         // 회원 정보 생성
         long id = RestAssured
                 .given()
+                    .body(request)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                     .post("/member")

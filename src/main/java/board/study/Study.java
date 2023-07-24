@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,12 +16,13 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Audited
-@AuditOverride(forClass= BaseEntity.class)
+//@Audited
+//@AuditOverride(forClass= BaseEntity.class)
 @Where(clause = "is_deleted = false")
 public class Study extends BaseEntity {
 
     @Id @GeneratedValue
+    @Column(name = "study_id")
     private Long id;
 
     private StudyType studyType;

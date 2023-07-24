@@ -5,17 +5,17 @@ import board.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Getter
 @Entity(name = "reply")
-@Audited
+//@Audited
 @NoArgsConstructor
 public class Reply extends BaseEntity {
 
     @Id
+    @Column(name = "reply_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -24,7 +24,7 @@ public class Reply extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="boardId")
+    @JoinColumn(name="board_id")
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -5,18 +5,18 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Entity
-@Audited
+//@Audited
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
 
     @Id @GeneratedValue
+    @Column(name = "board_id")
     private Long id;
 
     @Column(length = 100, nullable = false)

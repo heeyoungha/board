@@ -10,25 +10,22 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Delegate;
 import org.apache.tomcat.jni.Address;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
-
 @Getter
 @Entity
-@Audited(targetAuditMode = NOT_AUDITED)
-@AuditOverride(forClass= BaseEntity.class)
+//@Audited(targetAuditMode = NOT_AUDITED)
+//@AuditOverride(forClass= BaseEntity.class)
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
     private String username;

@@ -6,22 +6,19 @@ import board.study.Study;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
-import org.hibernate.envers.AuditOverride;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
-import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
-
 @Getter
 @Entity
-@Audited(targetAuditMode = NOT_AUDITED)
-@AuditOverride(forClass= BaseEntity.class)
+//@Audited(targetAuditMode = NOT_AUDITED)
+//@AuditOverride(forClass= BaseEntity.class)
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Project extends BaseEntity {
 
     @Id @GeneratedValue
+    @Column(name = "project_id")
     private Long id;
 
     private String title;
