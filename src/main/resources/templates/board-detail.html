@@ -131,7 +131,9 @@
     <th:block th:if="${replyList != null}">
         <tr th:each="reply : ${replyList}">
             <td th:text="${reply.id}"></td>
-            <td th:text="${reply.user}"></td>
+            <div th:if="${reply != null}" th:text="${reply.member}"></div>
+            <div th:unless="${reply != null}">No Reply</div>
+
             <td>
                 <span id="${reply.id}" th:text="${reply.content}"></span>
                 <a href="#" id="btnReply" class="edit-reply-button" replyid="${reply.id}" onclick="editReply(event)">수정</a>
