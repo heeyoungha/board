@@ -25,6 +25,8 @@ public class Study extends BaseEntity {
     @Column(name = "study_id")
     private Long id;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "study_type", unique = true)
     private StudyType studyType;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
@@ -35,7 +37,7 @@ public class Study extends BaseEntity {
         //this.study = study;
         try{
             this.studyType = StudyType.valueOf(study);
-        } catch(IllegalArgumentException e){
+        } catch(Exception e){
             throw TypeException.of("스터디", study);
         }
     }
