@@ -1,6 +1,7 @@
 package board.project;
 
 import board.study.type.StudyType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ public class ProjectRequest {
 
     @Data
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class CreateProjectRequest{
         private String title;
 
