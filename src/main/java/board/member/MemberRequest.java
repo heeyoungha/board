@@ -32,12 +32,14 @@ public class MemberRequest {
     @Schema(description = "코드")
     private String zipcode;
 
-    public MemberRequest(String username, String pw, int age, String interest,String address ){
-        this.username = username;
-        this.pw = pw;
-        this.age = age;
-        this.interest = interest;
-        this.address1 = address;
-    }
+//    public MemberRequest(String username, String pw, int age, String interest,String address1, String address2, String zipcode ){
+//        this.username = username;
+//        this.pw = pw;
+//        this.age = age;
+//        this.interest = interest;
+//        this.address1 = address1;
+//        this.address2 = address2;
+//        this.zipcode = zipcode;
+//    }
 
 }

@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Delegate;
-import org.apache.tomcat.jni.Address;
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.NotAudited;
 
@@ -39,7 +38,7 @@ public class Member extends BaseEntity {
 
     @Embedded
     @Delegate
-    private Address address = new Address();
+    private board.member.type.Address address;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Project> projects = new ArrayList<>();
@@ -50,7 +49,7 @@ public class Member extends BaseEntity {
     //메소드
 
     @Builder
-    public Member(String username, String pw, int age, String interest, Address address){
+    public Member(String username, String pw, int age, String interest, board.member.type.Address address){
         this.username = username;
         this.pw = pw;
         this.interest = interest;

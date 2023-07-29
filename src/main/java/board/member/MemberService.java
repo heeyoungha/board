@@ -24,7 +24,7 @@ public class MemberService {
                 .age(request.getAge())
                 .username(request.getUsername())
                 .interest(request.getInterest())
-                .address(new Address(request.getAddress1(),request.getAddress2()))
+                .address(new Address(request.getAddress1(),request.getAddress2(), request.getZipcode()))
                 .build();
         memberRepository.save(member);
 
