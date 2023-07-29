@@ -53,5 +53,11 @@ public class MemberApiTest extends AcceptanceTest {
                 .then()
                 .statusCode(204).log().all();
         // 삭제된 회원 정보는 조회되면 안됨
+        RestAssured
+                .given()
+                .when()
+                .get("/member"+id)
+                .then()
+                .statusCode(500);
     }
 }
