@@ -26,17 +26,29 @@ public class Study extends BaseEntity {
     private Long id;
 
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "study_type", unique = true)
+    @Column(name = "study_type")
     private StudyType studyType;
+
+    private String location;
+
+    private String title;
+
+    private String description;
+
+    private boolean published;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
     private List<Project> projects = new ArrayList<>();
 
     @Builder
-    public Study(String study){
+    public Study(String study, String location,String title, String description){
         //this.study = study;
         try{
             this.studyType = StudyType.valueOf(study);
+            this.location = location;
+            this.title = title;
+            this.description = description;
+            this.published = false;
         } catch(Exception e){
             throw TypeException.of("스터디", study);
         }

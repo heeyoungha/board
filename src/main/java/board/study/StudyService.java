@@ -20,6 +20,9 @@ public class StudyService {
     public StudyResponse createStudy(StudyRequest request) {
         Study study = Study.builder()
                 .study(request.getStudy())
+                .location(request.getLocation())
+                .title(request.getTitle())
+                .description(request.getDescription())
                 .build();
 
         studyRepository.save(study);

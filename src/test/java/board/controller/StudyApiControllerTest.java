@@ -14,7 +14,7 @@ public class StudyApiControllerTest {
 
     @BeforeEach
     void setUp() {
-        request = new StudyRequest("sports");
+        request = new StudyRequest("sports", "망원", "망원 런닝", "주 3회 인증");
     }
 
     @Test
