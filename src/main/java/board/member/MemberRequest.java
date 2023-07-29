@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @Schema(description = "회원가입 요청 폼")
 public class MemberRequest {
 
-    @Schema(description = "유저네임", required = true)
+    @Schema(description = "유저네임", required = true, example = "홍길동")
     private String username;
 
-    @Schema(description = "비밀번호", required = true)
+    @Schema(description = "비밀번호", required = true, example = "1234")
     private String pw;
 
-    @Schema(description = "나이")
+    @Schema(description = "나이", example = "30")
     private int age;
 
-    @Schema(description = "취미")
+    @Schema(description = "취미", example = "코딩")
     private String interest;
 
     @Schema(description = "주소1", example = "서울시 동작구")

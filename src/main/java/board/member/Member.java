@@ -2,12 +2,12 @@ package board.member;
 
 
 import board.TimeEntity;
+import board.member.type.Address;
 import board.project.Project;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Delegate;
-import org.apache.tomcat.jni.Address;
 import org.hibernate.annotations.Where;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
