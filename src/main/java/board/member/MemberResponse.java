@@ -18,7 +18,7 @@ public class MemberResponse {
 
     @Builder
     public MemberResponse(Member member){
-//        this.address1 = member.getAddress1();
+        this.address1 = member.getAddress1();
         this.id = member.getId();
         this.username = member.getUsername();
         this.pw = member.getPw();

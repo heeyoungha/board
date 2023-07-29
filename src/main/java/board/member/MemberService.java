@@ -1,6 +1,7 @@
 package board.member;
 
 import board.exception.DomainException;
+import board.member.type.Address;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class MemberService {
                 .age(request.getAge())
                 .username(request.getUsername())
                 .interest(request.getInterest())
-//                .address(new Address(request.getAddress1(),request.getAddress2())
+                .address(new Address(request.getAddress1(),request.getAddress2()))
                 .build();
         memberRepository.save(member);
 
