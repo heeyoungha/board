@@ -24,8 +24,8 @@ public class ProjectService {
     @Transactional
     public ProjectResponse createProject(ProjectRequest.CreateProjectRequest request) {
 
-        Study study = studyRepository.findByStudyType(request.getStudyType())
-                .orElseThrow(()-> DomainException.notFindRow(request.getStudy()));
+        Study study = studyRepository.findById(request.getStudy_id())
+                .orElseThrow(()-> DomainException.notFindRow(request.getStudy_id()));
 
         Member member = memberRepository.findByUsername(request.getUserName())
                 .orElseThrow(()->DomainException.notFindRow(request.getUserName()));

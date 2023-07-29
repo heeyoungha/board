@@ -44,8 +44,8 @@ public class Project extends BaseEntity {
         return project;
     }
 
-    public String getStudy(){
-        return study.getStudyType();
+    public Long getStudyId(){
+        return study.getId();
     }
     public String userName(){
         return member.getUsername();

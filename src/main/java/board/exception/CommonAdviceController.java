@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CommonAdviceController {
 
-    @ResponseBody
-    @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<ErrorResponse> exception(Exception e){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ErrorResponse.of("관리자에게 문의주세요.", e.getMessage()));
-    }
+//    @ResponseBody
+//    @ExceptionHandler(value = Exception.class)
+//    public ResponseEntity<ErrorResponse> exception(Exception e){
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                .body(ErrorResponse.of("관리자에게 문의주세요.", e.getMessage()));
+//    }
 
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)

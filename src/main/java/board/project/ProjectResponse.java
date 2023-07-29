@@ -11,7 +11,7 @@ public class ProjectResponse {
 
     private String startdate;
 
-    private String study;
+    private Long study_id;
 
     private String userName;
 
@@ -21,7 +21,7 @@ public class ProjectResponse {
         this.id = project.getId();
         this.startdate= project.getStartdate();
         this.title = project.getTitle();
-        this.study = project.getStudy();
+        this.study_id = project.getStudyId();
         this.userName = project.userName();
         this.bookmark = project.getBookmark();
     }
