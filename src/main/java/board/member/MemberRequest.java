@@ -2,10 +2,12 @@ package board.member;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "회원가입 요청 폼")
@@ -23,23 +25,25 @@ public class MemberRequest {
     @Schema(description = "취미", example = "코딩")
     private String interest;
 
-    @Schema(description = "주소1", example = "서울시 동작구")
-    private String address1;
+    @Schema(description = "주소")
+    private MemberAddressRequest address;
 
-    @Schema(description = "주소2", example = "상세주소")
-    private String address2;
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Schema(description = "회원가입 요청 폼_주소")
+    public static class MemberAddressRequest {
 
-    @Schema(description = "코드")
-    private String zipcode;
+        @Schema(description = "주소1", example = "서울시 동작구")
+        private String address1;
 
-//    public MemberRequest(String username, String pw, int age, String interest,String address1, String address2, String zipcode ){
-//        this.username = username;
-//        this.pw = pw;
-//        this.age = age;
-//        this.interest = interest;
-//        this.address1 = address1;
-//        this.address2 = address2;
-//        this.zipcode = zipcode;
-//    }
+        @Schema(description = "주소2", example = "상세주소")
+        private String address2;
+
+        @Schema(description = "코드")
+        private String zipcode;
+
+    }
 
 }

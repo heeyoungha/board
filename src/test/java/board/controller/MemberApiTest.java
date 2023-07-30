@@ -15,7 +15,7 @@ public class MemberApiTest extends AcceptanceTest {
 
     @BeforeEach
     void setUp() {
-        request = new MemberRequest("young", "2134",30,"coding", "서울시 동작구","상세주소","432423");
+//        request = new MemberRequest("young", "2134",30,"coding", {"서울시 동작구","상세주소","432423"});
     }
 
     /**

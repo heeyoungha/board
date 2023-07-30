@@ -1,7 +1,7 @@
 package board.member;
 
 import board.exception.DomainException;
-import board.member.type.Address;
+import board.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,20 +15,22 @@ import java.util.stream.Collectors;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MemberMapper memberMapper;
 
     @Transactional
     public MemberResponse createMember(MemberRequest request) {
 
-        Member member = Member.builder()
-                .pw(request.getPw())
-                .age(request.getAge())
-                .username(request.getUsername())
-                .interest(request.getInterest())
-                .address(new Address(request.getAddress1(),request.getAddress2(), request.getZipcode()))
-                .build();
+        Member member = memberMapper.toMember(request);
+//        Member member = Member.builder()
+//                .pw(request.getPw())
+//                .age(request.getAge())
+//                .username(request.getUsername())
+//                .interest(request.getInterest())
+//                .address(new Address(request.getAddress1(),request.getAddress2(), request.getZipcode()))
+//                .build();
         memberRepository.save(member);
 
-        return new MemberResponse(member);
+        return memberMapper.toMemberResponse(member);
 
     }
 
@@ -37,7 +39,7 @@ public class MemberService {
         List<MemberResponse> members = new ArrayList<>();
         members = memberRepository.findAll()
                     .stream()
-                    .map(MemberResponse::new)
+                    .map(a->memberMapper.toMemberResponse(a))
                     .collect(Collectors.toList());
         return members;
     }
@@ -46,9 +48,7 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(()-> DomainException.notFindRow(id));
 
-        MemberResponse response = new MemberResponse(member);
-
-        return response;
+        return memberMapper.toMemberResponse(member);
     }
 
     @Transactional
