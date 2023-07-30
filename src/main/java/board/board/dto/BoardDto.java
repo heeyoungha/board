@@ -18,15 +18,15 @@ public class BoardDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
-    public Board toEntity(){
-        Board build = Board.builder()
-                .id(id)
-                .writer(writer)
-                .title(title)
-                .content(content)
-                .build();
-        return build;
-    }
+//    public Board toEntity(){
+//        Board build = Board.builder()
+//                .id(id)
+//                .writer(writer)
+//                .title(title)
+//                .content(content)
+//                .build();
+//        return build;
+//    }
 
     @Builder
     public BoardDto(Board board){

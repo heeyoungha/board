@@ -1,5 +1,6 @@
 package board.board.controller;
 
+import board.board.domain.Reply;
 import board.board.dto.BoardDto;
 import board.board.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,9 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/api/board")
@@ -41,7 +43,7 @@ public class BoardApiController {
     public Page<BoardDto> list(
                        @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)
                        Pageable pageable,
-                       String searchKeyword
+                       @PathVariable String searchKeyword
     ){
         return boardService.boardSearchList(searchKeyword, pageable);
     }
@@ -50,13 +52,12 @@ public class BoardApiController {
     @Operation(summary = "게시판 생성 페이지를 조회합니다 🔍 ➕ 📄 ")
     public String getCreateBoard(){
         return "create-board.html";
-    }
+    }*/
 
     @PostMapping("/")
     @Operation(summary = "게시글을 생성합니다 ➕ ")
-    public String createBoard(BoardDto dto) {
-        boardService.savePost(dto);
-        return "redirect:/boardList";
+    public BoardDto createBoard(@RequestBody BoardDto dto) {
+        return boardService.savePost(dto);
     }
 
     @GetMapping("/{boardId}")
@@ -66,17 +67,17 @@ public class BoardApiController {
         List<Reply> replyList = boardService.getReplyList(id);
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("replyList", replyList);
-
+        //BoardDto, List<Reply>를 둘 다 반환해야하면? 반환객체를 새로 생성?
         return "board-detail";
     }
 
-    @GetMapping("/edit/{boardId}")
+    /*@GetMapping("/edit/{boardId}")
     @Operation(summary = "게시글 수정페이지를 조회합니다 🔍 ♻️ ")
     public String editBoard(@PathVariable("boardId") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
         model.addAttribute("boardDto", boardDto);
         return "board/edit";
-    }*/
+    }
 
 //    @PostMapping("/edit/{boardId}")
 //    public String editBoard(BoardDto dto){
@@ -84,12 +85,15 @@ public class BoardApiController {
 //        return "/board/edit/{boardId}";
 //    }
 
-   /* @PostMapping(value = "/edit/{boardId}")
-    @Operation(summary = "게시글 수정페이지를 생성합니다 ➕ ♻️ ")
-    public String editBoard(@PathVariable("boardId") Long boardId, BoardDto dto){
+    @PatchMapping(value = "/edit/{boardId}")
+    @Operation(summary = "특정 게시글을 수정합니다 ♻️ ")
+    public ResponseEntity<Void> editBoard(@PathVariable("boardId") Long boardId,
+                                          @RequestBody BoardDto dto){
         boardService.savePost(dto);
-        return "redirect:/";
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    /*
     @PostMapping("/delete")
     @Operation(summary = "게시글을 삭제합니다 🗑 ")
     public String delete(Long id){
