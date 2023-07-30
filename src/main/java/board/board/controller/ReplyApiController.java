@@ -9,21 +9,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/v1/api/board/{boardId}/reply")
 @RequiredArgsConstructor
 @Tag(name = "reply V1 API", description = "댓글을 관리하는 API")
-public class ReplyController {
+public class ReplyApiController {
 
     @Autowired
     private final ReplyService replyService;
 
-    @PostMapping("/board/{boardId}/reply")
+    @PostMapping
     @Operation(summary = "댓글을 생성합니다 ➕ ")
     public String createReply(@PathVariable("boardId") Long boardId,
                               @RequestParam("content") String content,
@@ -46,7 +46,7 @@ public class ReplyController {
 
 
     // 댓글 수정 처리
-    @PutMapping("/board/{boardId}/reply/{replyId}")
+    @PutMapping("/{replyId}")
     @ResponseBody
     @Operation(summary = "댓글을 수정합니다 ♻️ ")
     public ResponseEntity<String> editReply(@PathVariable("boardId") Long boardId,
@@ -61,7 +61,7 @@ public class ReplyController {
     }
 
 
-    @RequestMapping(value = "/board/{boardId}/reply/{replyId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{replyId}", method = RequestMethod.DELETE)
     @ResponseBody
     @Operation(summary = "댓글을 삭제합니다 🗑 ")
     public ResponseEntity<String>  deleteReply(@PathVariable Long boardId, @PathVariable Long replyId) {

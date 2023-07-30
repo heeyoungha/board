@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/project")
+@RequestMapping("/v1/api/project")
 @Tag(name = "project V1 API", description = "프로젝트를 관리하는 API")
 public class ProjectController {
 
