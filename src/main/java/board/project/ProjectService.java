@@ -24,13 +24,13 @@ public class ProjectService {
     @Transactional
     public ProjectResponse createProject(ProjectRequest.CreateProjectRequest request) {
 
-        Study study = studyRepository.findById(request.getStudy_id())
-                .orElseThrow(()-> DomainException.notFindRow(request.getStudy_id()));
+        Study study = studyRepository.findById(request.getStudyId())
+                .orElseThrow(()-> DomainException.notFindRow(request.getStudyId()));
 
         Member member = memberRepository.findByUsername(request.getUserName())
                 .orElseThrow(()->DomainException.notFindRow(request.getUserName()));
 
-        Project project = Project.of(request.getTitle(), request.getStartdate(), study, member);
+        Project project = Project.of(request.getTitle(), request.getStartDate(), study, member);
 
         projectRepository.save(project);
 
@@ -69,7 +69,7 @@ public class ProjectService {
         Project project = projectRepository.findById(id)
                 .orElseThrow(()-> DomainException.notFindRow(id));
 
-        project.updateProject(request.getTitle(), request.getStartdate());
+        project.updateProject(request.getTitle(), request.getStartDate());
 
 
         //projectRepository.save(project);
