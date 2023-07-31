@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,7 +86,7 @@ public class BoardApiController {
 //        boardService.savePost(dto);
 //        return "/board/edit/{boardId}";
 //    }
-
+*/
     @PatchMapping(value = "/edit/{boardId}")
     @Operation(summary = "특정 게시글을 수정합니다 ♻️ ")
     public ResponseEntity<Void> editBoard(@PathVariable("boardId") Long boardId,
@@ -93,13 +95,13 @@ public class BoardApiController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    /*
+
     @PostMapping("/delete")
     @Operation(summary = "게시글을 삭제합니다 🗑 ")
-    public String delete(Long id){
+    public ResponseEntity<Void> delete(Long id){
         boardService.deletePost(id);
-        return "redirect:/";
-    }*/
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
 
 }

@@ -49,7 +49,7 @@ public class ReplyApiController {
     @PutMapping("/{replyId}")
     @ResponseBody
     @Operation(summary = "댓글을 수정합니다 ♻️ ")
-    public ResponseEntity<String> editReply(@PathVariable("boardId") Long boardId,
+    public ResponseEntity<Void> editReply(@PathVariable("boardId") Long boardId,
                                             @PathVariable("replyId") Long replyId,
                                             @RequestParam("content") String content) {
         try {
