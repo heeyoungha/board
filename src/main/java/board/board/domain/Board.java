@@ -11,6 +11,7 @@ import java.util.List;
 
 @Getter
 @Entity
+@Table(name = "board")
 //@Audited
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {

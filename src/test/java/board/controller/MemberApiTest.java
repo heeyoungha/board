@@ -7,7 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test") //AcceptanceTest상속받았으므로 사실 필요없음
 @DisplayName("회원 인수 테스트")
 public class MemberApiTest extends AcceptanceTest {
 
@@ -25,6 +27,45 @@ public class MemberApiTest extends AcceptanceTest {
     @Test
     void createMemberTest(){
         // 회원 정보 생성
+        long id = createMember(request);
+
+        // 회원 정보 조회
+        readMember(id);
+
+        // 회원 정보 삭제
+        deleteMember(id);
+        // 삭제된 회원 정보는 조회되면 안됨
+        notFound(id);
+    }
+
+    protected static void notFound(long id) {
+        RestAssured
+                .given()
+                .when()
+                .get("/member"+ id)
+                .then()
+                .statusCode(500);
+    }
+
+    protected static void deleteMember(long id) {
+        RestAssured
+                .given()
+                .when()
+                .delete("/member/"+ id)
+                .then()
+                .statusCode(204).log().all();
+    }
+
+    protected static void readMember(long id) {
+        RestAssured
+                .given()
+                .when()
+                .get("/member/"+ id)
+                .then()
+                .statusCode(200).log().all();
+    }
+
+    protected static long createMember(MemberRequest request) {
         long id = RestAssured
                 .given()
                     .body(request)
@@ -36,28 +77,6 @@ public class MemberApiTest extends AcceptanceTest {
                     .extract()
                     .jsonPath()
                     .getLong("id");
-
-        // 회원 정보 조회
-        RestAssured
-                .given()
-                .when()
-                .get("/member/"+id)
-                .then()
-                .statusCode(200).log().all();
-
-        // 회원 정보 삭제
-        RestAssured
-                .given()
-                .when()
-                .delete("/member/"+id)
-                .then()
-                .statusCode(204).log().all();
-        // 삭제된 회원 정보는 조회되면 안됨
-        RestAssured
-                .given()
-                .when()
-                .get("/member"+id)
-                .then()
-                .statusCode(500);
+        return id;
     }
 }

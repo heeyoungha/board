@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@Table(name = "project")
 //@Audited(targetAuditMode = NOT_AUDITED)
 //@AuditOverride(forClass= BaseEntity.class)
 @NoArgsConstructor
@@ -27,11 +28,11 @@ public class Project extends BaseEntity {
 
     private int bookmark;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "study_id")
     private Study study;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 

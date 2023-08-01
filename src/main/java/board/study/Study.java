@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "study")
 //@Audited
 //@AuditOverride(forClass= BaseEntity.class)
 @Where(clause = "is_deleted = false")
@@ -29,7 +30,7 @@ public class Study extends BaseEntity {
     @Column(name = "study_type", unique = true)
     private StudyType studyType;
 
-    @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "study")
     private List<Project> projects = new ArrayList<>();
 
     @Builder
