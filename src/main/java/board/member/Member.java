@@ -3,6 +3,7 @@ package board.member;
 
 import board.BaseEntity;
 import board.board.domain.Reply;
+import board.member.type.Address;
 import board.project.Project;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Getter
 @Entity
+@Table(name = "member")
 //@Audited(targetAuditMode = NOT_AUDITED)
 //@AuditOverride(forClass= BaseEntity.class)
 @NoArgsConstructor
@@ -38,9 +40,9 @@ public class Member extends BaseEntity {
 
     @Embedded
     @Delegate
-    private board.member.type.Address address;
+    private Address address;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member")
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")

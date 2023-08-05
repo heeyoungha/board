@@ -1,6 +1,7 @@
 package board.project;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ public class ProjectRequest {
 
     @Data
     @NoArgsConstructor
+    @AllArgsConstructor
     public static class CreateProjectRequest{
         @Schema(description = "타이틀", required = true, example = "망원 러닝 7월")
         private String title;

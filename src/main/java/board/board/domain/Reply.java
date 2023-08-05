@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Entity(name = "reply")
+@Entity
+@Table(name = "reply")
 //@Audited
 @NoArgsConstructor
 public class Reply extends BaseEntity {
@@ -23,11 +24,11 @@ public class Reply extends BaseEntity {
     @Column(nullable = false, length = 120)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="board_id")
     private Board board;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="member_id")
     private Member member;
 

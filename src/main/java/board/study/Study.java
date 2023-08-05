@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "study")
 //@Audited
 //@AuditOverride(forClass= BaseEntity.class)
 @Where(clause = "is_deleted = false")
