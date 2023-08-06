@@ -38,6 +38,12 @@
             margin-bottom: 20px;
         }
 
+        span{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
         button {
             padding: 5px 10px;
             background-color: #007bff;
@@ -80,6 +86,10 @@
             background-color: #f5f5f5;
             font-weight: bold;
         }
+        .replySpan_editReply{
+            display: flex;
+            justify-content: right;
+        }
 
         .lead {
             font-size: 18px;
@@ -110,15 +120,6 @@
     </form>
 </div>
 
-<!-- Reply Section -->
-<div class="input-group">
-    <form id="reply" th:action="@{/board/{boardId}/reply (boardId=${boardDto.id})}" method="post">
-        <input type="text" id="content" name="content" class="form-control" placeholder="댓글을 입력해주세요.." aria-label="댓글을 입력해주세요.." aria-describedby="basic-addon2" />
-        <input type="hidden" id="boardId" name="boardId" th:value="${boardDto.id}" />
-        <button class="btn btn-outline-secondary" type="submit">등록</button>
-    </form>
-</div>
-
 <table>
     <thead>
     <tr>
@@ -131,24 +132,31 @@
     <th:block th:if="${replyList != null}">
         <tr th:each="reply : ${replyList}">
             <td th:text="${reply.id}"></td>
-            <div th:if="${reply != null}" th:text="${reply.member}"></div>
-            <div th:unless="${reply != null}">No Reply</div>
-
             <td>
+                <div th:if="${reply != null}" th:text="${reply.member}"></div>
+                <div th:unless="${reply != null}">No Reply</div>
+            </td>
+            <td class="replySpan_editReply">
                 <span id="${reply.id}" th:text="${reply.content}"></span>
-                <a href="#" id="btnReply" class="edit-reply-button" replyid="${reply.id}" onclick="editReply(event)">수정</a>
-                <a href="#" th:href="@{/board/{boardId}/reply/{replyId}(boardId=${boardDto.id}, replyId=${reply.id})}" onClick="javascript:deleteReply(event)" th:replyid="@{${reply.id}}">삭제</a>
-                <!-- Reply Edit Form -->
-                <form id="editReplyForm" style="display: none;">
-                    <input type="text" id="editContent" name="content" class="form-control" placeholder="댓글을 수정해주세요.." aria-label="댓글을 수정해주세요.." aria-describedby="basic-addon2" />
-                    <input type="hidden" id="replyEdit-boardId" name="replyEdit-boardId" th:value="${boardDto.id}" />
-                    <input type="hidden" id="replyId" name="replyId" th:value="${reply.id}" />
+                <div class="button-group">
+                    <form>
+                        <button href="#" id="btnReply" class="edit-reply-button" replyid="${reply.id}" onclick="editReply(event)">수정</button>
+                    </form>
+                    <a href="#" th:href="@{/board/{boardId}/reply/{replyId}(boardId=${boardDto.id}, replyId=${reply.id})}" onClick="javascript:deleteReply(event)" th:replyid="@{${reply.id}}">
+                        <button>삭제</button>
+                    </a>
+                    <!-- Reply Edit Form -->
+                    <form id="editReplyForm" style="display: none;">
+                        <input type="text" id="editContent" name="content" class="form-control" placeholder="댓글을 수정해주세요.." aria-label="댓글을 수정해주세요.." aria-describedby="basic-addon2" />
+                        <input type="hidden" id="replyEdit-boardId" name="replyEdit-boardId" th:value="${boardDto.id}" />
+                        <input type="hidden" id="replyId" name="replyId" th:value="${reply.id}" />
 
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="submitEdit(event)">수정 완료</button>
-                        <button class="btn btn-outline-secondary" type="button" onclick="cancelEdit(event)">수정 취소</button>
-                    </div>
-                </form>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="submitEdit(event)">수정 완료</button>
+                            <button class="btn btn-outline-secondary" type="button" onclick="cancelEdit(event)">수정 취소</button>
+                        </div>
+                    </form>
+                </div>
 
             </td>
         </tr>
@@ -161,6 +169,14 @@
     </tbody>
 </table>
 
+<!-- Reply Section -->
+<div class="input-group">
+    <form id="reply" th:action="@{/board/{boardId}/reply (boardId=${boardDto.id})}" method="post">
+        <input type="text" id="content" name="content" class="form-control" placeholder="댓글을 입력해주세요.." aria-label="댓글을 입력해주세요.." aria-describedby="basic-addon2" />
+        <input type="hidden" id="boardId" name="boardId" th:value="${boardDto.id}" />
+        <button class="btn btn-outline-secondary" type="submit">등록</button>
+    </form>
+</div>
 
 <script>
     function editReply(event) {
@@ -169,6 +185,8 @@
         var contentElement = document.getElementById(replyId);
         var editForm = document.getElementById('editReplyForm');
         var editContent = document.getElementById('editContent');
+        var replyBtn= document.getElementById('btnReply');
+        var replyBtn2= document.getElementById('btnReply2');
 
         // 현재 댓글 내용을 수정 폼에 설정
         editContent.value = contentElement.innerText;
@@ -178,6 +196,10 @@
 
         // 댓글 내용 숨기기
         //contentElement.style.display = 'none';
+
+        //수정,삭제 버튼 숨기기
+        replyBtn.style.display = 'none';
+        replyBtn2.style.display = 'none';
     }
 
     function submitEdit(event) {
@@ -265,6 +287,7 @@
                     }
                 })
             }
+
         }
 </script>
 <!-- Reply Section End -->
