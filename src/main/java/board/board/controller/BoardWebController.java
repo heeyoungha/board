@@ -18,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class BoardController {
+public class BoardWebController {
 
     private final BoardService boardService;
 

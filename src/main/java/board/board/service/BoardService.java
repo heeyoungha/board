@@ -3,6 +3,7 @@ package board.board.service;
 import board.board.domain.Board;
 import board.board.domain.Reply;
 import board.board.dto.BoardDto;
+import board.board.dto.BoardDtoReplyList;
 import board.board.repository.BoardRepository;
 import board.exception.DomainException;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,10 @@ public class BoardService {
 
     //검색
     public Page<BoardDto> boardSearchList(String searchKeyword, Pageable pageable){
+        if(searchKeyword == null){
+            return getBoardList(pageable);
+        }
+
         Page<Board> boards =  boardRepository.findByTitleContaining(searchKeyword, pageable);
         List<BoardDto> boardDtoList = new ArrayList<>();
 
@@ -55,8 +60,15 @@ public class BoardService {
         return new PageImpl<>(boardDtoList, pageable, boards.getTotalElements());
     }
 
-    public void savePost(BoardDto boardDto){
-        boardRepository.save(boardDto.toEntity());
+    public BoardDto savePost(BoardDto boardDto){
+        Board board = Board.builder()
+                .writer(boardDto.getWriter())
+                .title(boardDto.getTitle())
+                .content(boardDto.getContent())
+                .build();
+        boardRepository.save(board);
+        //boardRepository.save(boardDto.toEntity());
+        return new BoardDto(board);
     }
 
     public BoardDto getPost(Long id){
@@ -95,5 +107,11 @@ public class BoardService {
     }
 
 
-
+    public BoardDtoReplyList getBdtoRlist(BoardDto boardDto, List<Reply> replyList) {
+        BoardDtoReplyList boardDtoReplyList = BoardDtoReplyList.builder()
+                .boardDto(boardDto)
+                .replyList(replyList)
+                .build();
+        return boardDtoReplyList;
+    }
 }
