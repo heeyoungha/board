@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "회원가입 요청 폼")
+@Schema(description = "회원가입 요청")
 public class MemberRequest {
 
     @Schema(description = "유저네임", required = true, example = "홍길동")
@@ -19,10 +19,10 @@ public class MemberRequest {
     @Schema(description = "비밀번호", required = true, example = "1234")
     private String pw;
 
-    @Schema(description = "나이", example = "30")
+    @Schema(description = "나이", example = "20")
     private int age;
 
-    @Schema(description = "취미", example = "코딩")
+    @Schema(description = "취미", example = "런닝")
     private String interest;
 
     @Schema(description = "주소")
@@ -41,9 +41,9 @@ public class MemberRequest {
         @Schema(description = "주소2", example = "상세주소")
         private String address2;
 
-        @Schema(description = "코드")
+        @Schema(description = "코드", example = "405963")
         private String zipcode;
 
-    }
 
+    }
 }
