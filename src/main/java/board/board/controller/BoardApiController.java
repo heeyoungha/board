@@ -2,6 +2,7 @@ package board.board.controller;
 
 import board.board.domain.Reply;
 import board.board.dto.BoardDto;
+import board.board.dto.BoardDtoReplyList;
 import board.board.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -64,29 +65,14 @@ public class BoardApiController {
 
     @GetMapping("/{boardId}")
     @Operation(summary = "특정 게시글을 조회합니다 🔍 📄 ")
-    public String detail(@PathVariable("boardId") Long id, Model model){
+    public BoardDtoReplyList detail(@PathVariable("boardId") Long id, Model model){
         BoardDto boardDto = boardService.getPost(id);
         List<Reply> replyList = boardService.getReplyList(id);
-        model.addAttribute("boardDto", boardDto);
-        model.addAttribute("replyList", replyList);
-        //BoardDto, List<Reply>를 둘 다 반환해야하면? 반환객체를 새로 생성?
-        return "board-detail";
+        BoardDtoReplyList boardDtoReplyList = boardService.getBdtoRlist(boardDto, replyList);
+        model.addAttribute("boardDtoReplyList", boardDtoReplyList);
+        return boardDtoReplyList;
     }
 
-    /*@GetMapping("/edit/{boardId}")
-    @Operation(summary = "게시글 수정페이지를 조회합니다 🔍 ♻️ ")
-    public String editBoard(@PathVariable("boardId") Long id, Model model){
-        BoardDto boardDto = boardService.getPost(id);
-        model.addAttribute("boardDto", boardDto);
-        return "board/edit";
-    }
-
-//    @PostMapping("/edit/{boardId}")
-//    public String editBoard(BoardDto dto){
-//        boardService.savePost(dto);
-//        return "/board/edit/{boardId}";
-//    }
-*/
     @PatchMapping(value = "/edit/{boardId}")
     @Operation(summary = "특정 게시글을 수정합니다 ♻️ ")
     public ResponseEntity<Void> editBoard(@PathVariable("boardId") Long boardId,

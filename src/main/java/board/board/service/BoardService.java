@@ -3,6 +3,7 @@ package board.board.service;
 import board.board.domain.Board;
 import board.board.domain.Reply;
 import board.board.dto.BoardDto;
+import board.board.dto.BoardDtoReplyList;
 import board.board.repository.BoardRepository;
 import board.exception.DomainException;
 import lombok.RequiredArgsConstructor;
@@ -106,5 +107,11 @@ public class BoardService {
     }
 
 
-
+    public BoardDtoReplyList getBdtoRlist(BoardDto boardDto, List<Reply> replyList) {
+        BoardDtoReplyList boardDtoReplyList = BoardDtoReplyList.builder()
+                .boardDto(boardDto)
+                .replyList(replyList)
+                .build();
+        return boardDtoReplyList;
+    }
 }
