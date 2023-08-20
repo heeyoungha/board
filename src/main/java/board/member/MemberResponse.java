@@ -23,10 +23,7 @@ public class MemberResponse {
     private int age;
     @Schema(description = "취미", example = "런닝")
     private String interest;
-    @Schema(description = "주소1", example = "서울시 동작구")
-    private String address1;
-    @Schema(description = "주소2", example = "상세주소")
-    private String address2;
+    @Schema(description = "주소")
     private MemberAddressResponse address;
 
     @Data

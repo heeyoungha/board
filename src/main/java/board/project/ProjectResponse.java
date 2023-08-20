@@ -10,7 +10,7 @@ public class ProjectResponse {
     @Schema(description = "제목", example = "런닝 1회차")
     private String title;
     @Schema(description = "시작날짜", example = "2023-07-02")
-    private String startdate;
+    private String startDate;
 
     @Schema(description = "스터디", example = "sports")
     private Long study_id;
@@ -22,7 +22,7 @@ public class ProjectResponse {
 
     public ProjectResponse(Project project){
         this.id = project.getId();
-        this.startdate= project.getStartdate();
+        this.startDate= project.getStartDate();
         this.title = project.getTitle();
         this.study_id = project.getStudyId();
         this.userName = project.userName();

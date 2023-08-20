@@ -1,6 +1,7 @@
 package board.board.controller;
 
 import board.board.domain.Reply;
+import board.board.dto.ReplyDto;
 import board.board.service.ReplyService;
 import board.member.Member;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,10 +27,10 @@ public class ReplyWebController {
     @PostMapping("/board/{boardId}/reply")
     @Operation(summary = "댓글을 생성합니다 ➕ ")
     public String createReply(@PathVariable("boardId") Long boardId,
-                              @RequestParam("content") String content,
+                              @RequestParam("content") ReplyDto replyDto,
                               //name 속성에는 세션에 저장된 속성의 이름을, required 속성에는 해당 속성이 반드시 필요한지 여부를 지정
                               @SessionAttribute(name = "user", required = false) Member user, Model model){
-        List<Reply> replyList = replyService.createReply(content, user, boardId);
+        List<Reply> replyList = replyService.createReply(replyDto, user, boardId);
         model.addAttribute("replyList", replyList);
         return "redirect:/board/{boardId}";
     }

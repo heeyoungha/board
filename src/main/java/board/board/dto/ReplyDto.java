@@ -15,7 +15,11 @@ import java.time.LocalDateTime;
 @Schema(description = "댓글 요청")
 public class ReplyDto {
 
-    private Long id;
+    @Schema(description = "댓글_아이디", example = "1")
+    private Long replyId;
+
+    @Schema(description = "게시글_아이디", required = true, example = "1")
+    private Long boardId;
 
     @Schema(description = "댓글", required = true, example = "첫번째 댓글입니다")
     private String content;
@@ -34,7 +38,7 @@ public class ReplyDto {
 
     @Builder
     public ReplyDto(Reply reply){
-        this.id = reply.getId();
+        this.replyId = reply.getId();
         this.content = reply.getContent();
         this.createdDate = reply.getCreatedDate();
         this.modifiedDate = reply.getModifiedDate();

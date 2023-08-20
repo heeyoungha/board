@@ -24,7 +24,7 @@ public class Project extends BaseEntity {
 
     private String title;
 
-    private String startdate;
+    private String startDate;
 
     private int bookmark;
 
@@ -36,10 +36,10 @@ public class Project extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static Project of(String title, String startdate, Study study, Member member){
+    public static Project of(String title, String startDate, Study study, Member member){
         Project project = new Project();
         project.title = title;
-        project.startdate = startdate;
+        project.startDate = startDate;
         project.study = study;
         project.member = member;
         return project;
@@ -56,8 +56,8 @@ public class Project extends BaseEntity {
         return this.bookmark;
     }
 
-    public void updateProject(String title, String startdate) {
+    public void updateProject(String title, String startDate) {
         this.title = title;
-        this.startdate = startdate;
+        this.startDate = startDate;
     }
 }

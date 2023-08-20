@@ -25,7 +25,7 @@ public class ReplyService {
     @Autowired
     private final BoardRepository boardRepository;
 
-    public List<Reply> createReply(String content, Member userRe, Long boardId){
+    public List<Reply> createReply(ReplyDto replyDto, Member userRe, Long boardId){
 
 //        User user = userRepository.findById(userRe.getId())
 //                .orElseThrow(()-> DomainException.notFindRow(userRe.getId()));
@@ -36,7 +36,7 @@ public class ReplyService {
         Reply reply = Reply.builder()
                 .board(board)
                 //.user(user)
-                .content(content)
+                .content(replyDto.getContent())
                 .build();
         replyRepository.save(reply);
 
