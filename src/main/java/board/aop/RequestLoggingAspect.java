@@ -28,8 +28,8 @@ public class RequestLoggingAspect {
 
         Object result;
         try {
-            log.error(operation.summary());
-            log.error(Arrays.toString(getMapping.value()));
+            log.info(operation.summary());
+            log.info(Arrays.toString(getMapping.value()));
             result = joinPoint.proceed();
         } catch (Throwable e) {
             throw new RuntimeException(e);

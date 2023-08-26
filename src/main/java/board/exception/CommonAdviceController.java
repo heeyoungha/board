@@ -3,14 +3,11 @@ package board.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
@@ -42,15 +39,24 @@ public class CommonAdviceController {
     }
 
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> nullException(MethodArgumentNotValidException e){
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Some parameters are invalid")
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> nullException(IllegalArgumentException e){
 
-        String errorMessage = e.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining());
-        log.error("⚠️ null 오류가 발생했습니다! \n [{}] ", e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        String errorMessage = e.getMessage();
+        log.error("⚠️ 잘못된 요청 파라미터입니다! \n [{}] ", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.of("잘못된 요청 파라미터입니다.", errorMessage));
+    }
+
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "No HttpInputMessage available - use non-deprecated constructors")
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> nullException(HttpMessageNotReadableException e){
+
+        String errorMessage = e.getMessage();
+        log.error("⚠️ 잘못된 요청 파라미터입니다! \n [{}] ", e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorResponse.of("잘못된 요청 파라미터입니다.", errorMessage));
     }
 }
