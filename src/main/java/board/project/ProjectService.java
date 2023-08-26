@@ -1,6 +1,6 @@
 package board.project;
 
-import board.exception.DomainException;
+import board.common.exception.DomainException;
 import board.member.Member;
 import board.member.MemberRepository;
 import board.study.Study;

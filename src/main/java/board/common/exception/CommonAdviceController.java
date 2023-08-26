@@ -1,4 +1,4 @@
-package board.exception;
+package board.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

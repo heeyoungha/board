@@ -5,7 +5,7 @@ import board.board.domain.Reply;
 import board.board.dto.BoardDto;
 import board.board.dto.BoardDtoReplyList;
 import board.board.repository.BoardRepository;
-import board.exception.DomainException;
+import board.common.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

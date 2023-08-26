@@ -1,4 +1,4 @@
-package board;
+package board.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

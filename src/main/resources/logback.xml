@@ -27,7 +27,7 @@
         <appender-ref ref="SLACK" />
     </logger>
 
--    <logger name="board.aop.RequestLoggingAspect" level="info" additivity="false">
+-    <logger name="board.common.aop.RequestLoggingAspect" level="info" additivity="false">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="SLACK" />
     </logger>

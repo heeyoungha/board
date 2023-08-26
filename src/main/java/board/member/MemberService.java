@@ -1,6 +1,6 @@
 package board.member;
 
-import board.exception.DomainException;
+import board.common.exception.DomainException;
 import board.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

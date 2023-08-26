@@ -1,7 +1,7 @@
 package board.study;
 
-import board.BaseEntity;
-import board.exception.TypeException;
+import board.common.BaseEntity;
+import board.common.exception.TypeException;
 import board.project.Project;
 import board.study.type.StudyType;
 import lombok.Builder;

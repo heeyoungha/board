@@ -1,6 +1,6 @@
 package board.board.domain;
 
-import board.BaseEntity;
+import board.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

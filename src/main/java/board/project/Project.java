@@ -1,6 +1,6 @@
 package board.project;
 
-import board.BaseEntity;
+import board.common.BaseEntity;
 import board.member.Member;
 import board.study.Study;
 import lombok.Getter;

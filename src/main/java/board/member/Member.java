@@ -1,8 +1,8 @@
 package board.member;
 
 
-import board.BaseEntity;
 import board.board.domain.Reply;
+import board.common.BaseEntity;
 import board.member.type.Address;
 import board.project.Project;
 import lombok.Builder;

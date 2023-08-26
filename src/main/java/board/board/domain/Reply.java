@@ -1,6 +1,6 @@
 package board.board.domain;
 
-import board.BaseEntity;
+import board.common.BaseEntity;
 import board.member.Member;
 import lombok.Builder;
 import lombok.Getter;
