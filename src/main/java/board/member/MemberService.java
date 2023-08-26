@@ -1,7 +1,10 @@
 package board.member;
 
-import board.exception.DomainException;
+import board.common.dto.HistoryResponse;
+import board.common.exception.DomainException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +42,26 @@ public class MemberService {
                     .map(MemberResponse::new)
                     .collect(Collectors.toList());
         return members;
+    }
+
+    @Transactional
+    public List<MemberResponse> readMemberHistoryList(Long id) {
+        Revisions<Long, Member> revisions = memberRepository.findRevisions(id);
+
+        return revisions.getContent().stream()
+                .map(rev -> getHistoryResponse(rev))
+                .collect(Collectors.toList());
+    }
+
+    private static HistoryResponse getHistoryResponse(Revision<Long, Member> rev) {
+
+        //누가
+        //무엇을
+        //시간
+
+
+        Member member = rev.getEntity();
+        return new HistoryResponse(entity);
     }
 
     public MemberResponse readMember(Long id) {

@@ -1,6 +1,6 @@
 package board.project;
 
-import board.TimeEntity;
+import board.common.TimeEntity;
 import board.member.Member;
 import board.member.type.Bookmark;
 import board.study.Study;

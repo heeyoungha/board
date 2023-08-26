@@ -1,5 +1,6 @@
 package board.board.controller;
 
+import board.board.domain.Board;
 import board.board.domain.Reply;
 import board.board.dto.BoardDto;
 import board.board.service.BoardService;
@@ -8,15 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -60,9 +58,9 @@ public class BoardController {
     }
 
     @PostMapping("/board")
-    public String createBoard(BoardDto dto) {
-        boardService.savePost(dto);
-        return "redirect:/boardList";
+    public Board createBoard(@RequestBody BoardDto dto) {
+
+        return boardService.savePost(dto);
     }
 
     @GetMapping("/board/{boardId}")
@@ -93,6 +91,7 @@ public class BoardController {
         boardService.savePost(dto);
         return "redirect:/";
     }
+
     @PostMapping("/board/delete")
     public String delete(Long id){
         boardService.deletePost(id);

@@ -1,7 +1,7 @@
 package board.member;
 
 
-import board.TimeEntity;
+import board.common.TimeEntity;
 import board.project.Project;
 import lombok.Builder;
 import lombok.Getter;

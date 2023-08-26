@@ -1,16 +1,21 @@
 package board.board.domain;
 
-import board.TimeEntity;
+import board.common.TimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Entity
+@Audited
+@AuditOverride(forClass = TimeEntity.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends TimeEntity {
 
@@ -23,6 +28,7 @@ public class Board extends TimeEntity {
     @Column(length = 10, nullable = false)
     private String writer;
 
+    @NotAudited
     @OneToMany(mappedBy = "board")
     private List<Reply> replyList;
 
@@ -31,14 +37,10 @@ public class Board extends TimeEntity {
 
 
     @Builder
-    public Board(Long id, String title, String content, String writer){
+    public Board(Long id, String title, String content, String writer) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.writer = writer;
     }
-
-
-
-
 }

@@ -1,7 +1,7 @@
 package board.study;
 
-import board.TimeEntity;
-import board.exception.TypeException;
+import board.common.TimeEntity;
+import board.common.exception.TypeException;
 import board.project.Project;
 import board.study.type.StudyType;
 import lombok.Builder;

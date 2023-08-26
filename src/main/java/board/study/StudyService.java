@@ -1,6 +1,6 @@
 package board.study;
 
-import board.exception.DomainException;
+import board.common.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

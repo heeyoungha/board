@@ -1,6 +1,6 @@
 package board.board.domain;
 
-import board.TimeEntity;
+import board.common.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

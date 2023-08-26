@@ -1,6 +1,6 @@
 package board.member;
 
-import board.TimeEntity;
+import board.common.TimeEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -57,4 +57,13 @@ public class MemberController extends TimeEntity {
 
         return ResponseEntity.ok(response);
     }
+
+    @ResponseBody
+    @GetMapping("/member/history/{id}")
+    @Operation(summary = "멤버를 히스토리를 조회합니다")
+    public ResponseEntity<List<MemberResponse>> readMemberHistoryList(@PathVariable Long id){
+        List<MemberResponse> members = memberService.readMemberHistoryList(id);
+        return ResponseEntity.ok(members);
+    }
 }
+

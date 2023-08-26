@@ -7,7 +7,7 @@ import board.board.dto.ReplyDto;
 import board.board.repository.BoardRepository;
 import board.board.repository.ReplyRepository;
 import board.board.repository.UserRepository;
-import board.exception.DomainException;
+import board.common.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

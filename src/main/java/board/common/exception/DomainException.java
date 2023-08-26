@@ -1,4 +1,4 @@
-package board.exception;
+package board.common.exception;
 
 public class DomainException extends RuntimeException {
 
