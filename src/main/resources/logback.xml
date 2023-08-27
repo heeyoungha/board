@@ -14,9 +14,9 @@
                 [%thread] %-5level %n%msg%n
             </pattern>
         </layout>
-        <webhookUri>https://hooks.slack.com/services/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</webhookUri>
+        <webhookUri>https://hooks.slack.com/services/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</webhookUri>
         <username>hee</username>
-        <channel>study</channel>
+        <channel>error</channel>
         <iconEmoji>:bell:</iconEmoji>
         <colorCoding>true</colorCoding>
     </appender>
@@ -28,6 +28,11 @@
     </logger>
 
 -    <logger name="board.common.aop.RequestLoggingAspect" level="info" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="SLACK" />
+    </logger>
+
+    <logger name="board.exception.CommonAdviceController" level="error" additivity="false">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="SLACK" />
     </logger>
