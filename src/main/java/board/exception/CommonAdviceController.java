@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 @Slf4j
@@ -38,25 +39,26 @@ public class CommonAdviceController {
                 .body(ErrorResponse.of("존재하지 않는 id입니다", e.getMessage()));
     }
 
+    // 404 예외처리 핸들러
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Some parameters are invalid")
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> nullException(IllegalArgumentException e){
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Not Found")
+    @ExceptionHandler(value = NoHandlerFoundException.class)
+    public ResponseEntity<ErrorResponse> handle404(NoHandlerFoundException e){
 
         String errorMessage = e.getMessage();
-        log.error("⚠️ 잘못된 요청 파라미터입니다! \n [{}] ", e.getMessage());
+        log.error("⚠️ 페이지를 찾을 수 없습니다! \n [{}] ", e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ErrorResponse.of("잘못된 요청 파라미터입니다.", errorMessage));
+                .body(ErrorResponse.of("페이지를 찾을 수 없습니다.", errorMessage));
     }
 
     @ResponseBody
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "No HttpInputMessage available - use non-deprecated constructors")
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> nullException(HttpMessageNotReadableException e){
+    public ResponseEntity<ErrorResponse> handle400(HttpMessageNotReadableException e){
 
         String errorMessage = e.getMessage();
         log.error("⚠️ 잘못된 요청 파라미터입니다! \n [{}] ", e.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorResponse.of("잘못된 요청 파라미터입니다.", errorMessage));
     }
 }
