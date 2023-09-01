@@ -1,5 +1,6 @@
 package board.study;
 
+import board.common.dto.HistoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ public class StudyController {
 
     private final StudyService studyService;
 
-    @ResponseBody
     @PostMapping
     @Operation(summary = "스터디를 생성합니다 ➕ ")
     public ResponseEntity<StudyResponse> createStudy(@RequestBody StudyRequest request){
@@ -25,7 +25,6 @@ public class StudyController {
         return ResponseEntity.ok(response);
     }
 
-    @ResponseBody
     @GetMapping
     @Operation(summary = "스터디 리스트를 모두 조회합니다 🔍 [ ]")
     public ResponseEntity<List<StudyResponse>> readStudyList(){
@@ -33,7 +32,6 @@ public class StudyController {
         return ResponseEntity.ok(responses);
     }
 
-    @ResponseBody
     @GetMapping("/{id}")
     @Operation(summary = "특정 스터디를 조회합니다 🔍 S ")
     public ResponseEntity<StudyResponse> readStudy(@PathVariable Long id){
@@ -41,7 +39,6 @@ public class StudyController {
         return ResponseEntity.ok(response);
     }
 
-    @ResponseBody
     @DeleteMapping("/{id}")
     @Operation(summary = "특정 스터디를 삭제합니다 🗑")
     public ResponseEntity<StudyResponse> deleteStudy(@PathVariable Long id){
@@ -49,11 +46,17 @@ public class StudyController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @ResponseBody
     @GetMapping("/{id}/average-bookmark")
     @Operation(summary = "스터디 평균 북마크를 조회합니다 🔍🔰")
     public ResponseEntity<SBookmarkResponse> getAverageBookmark(@PathVariable Long id){
         SBookmarkResponse response = studyService.getAverageBookmark(id);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/history/{id}")
+    @Operation(summary = "스터디 히스토리를 조회합니다")
+    public <T> ResponseEntity<List<HistoryResponse<?>>> readStudyHistoryList(@PathVariable Long id){
+        List<HistoryResponse<?>> studys = studyService.readStudyHistoryList(id);
+        return ResponseEntity.ok(studys);
     }
 }

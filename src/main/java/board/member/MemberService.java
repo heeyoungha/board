@@ -49,14 +49,14 @@ public class MemberService {
     }
 
     @Transactional
-    public <T> List<HistoryResponse<?>> readMemberHistoryList(Long id, Class<T> entityType) {
+    public <T> List<HistoryResponse<?>> readMemberHistoryList(Long id) {
         Revisions<Long, Member> revisions = memberRepository.findRevisions(id);
         return revisions.getContent().stream()
-                .map(rev -> getHistoryResponse(rev, entityType))
+                .map(rev -> getHistoryResponse(rev))
                 .collect(Collectors.toList());
     }
 
-    private static <T> HistoryResponse<?> getHistoryResponse(Revision<Long, Member> rev, Class<T> entityType) {
+    private static <T> HistoryResponse<?> getHistoryResponse(Revision<Long, Member> rev) {
 
 
         //누가

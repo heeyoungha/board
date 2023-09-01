@@ -58,8 +58,8 @@ public class MemberController extends BaseEntity {
     @ResponseBody
     @GetMapping("/history/{id}")
     @Operation(summary = "멤버를 히스토리를 조회합니다")
-    public <T> ResponseEntity<List<HistoryResponse<?>>> readMemberHistoryList(@PathVariable Long id, Class<T> entityType){
-        List<HistoryResponse<?>> members = memberService.readMemberHistoryList(id, entityType);
+    public <T> ResponseEntity<List<HistoryResponse<?>>> readMemberHistoryList(@PathVariable Long id){
+        List<HistoryResponse<?>> members = memberService.readMemberHistoryList(id);
         return ResponseEntity.ok(members);
     }
 }

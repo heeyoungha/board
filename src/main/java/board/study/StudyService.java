@@ -1,8 +1,12 @@
 package board.study;
 
+import board.common.audit.AuditRevision;
+import board.common.dto.HistoryResponse;
 import board.common.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,5 +66,21 @@ public class StudyService {
                 .bookmark(study.getAverageBookmark())
                 .studyType(study.getStudyType())
                 .build();
+    }
+
+    @Transactional
+    public  <T> List<HistoryResponse<?>> readStudyHistoryList(Long id){
+        Revisions<Long, Study> revisions = studyRepository.findRevisions(id);
+        return revisions.getContent().stream()
+                .map(rev -> getHistoryResponse(rev))
+                .collect(Collectors.toList());
+    }
+    private static <T> HistoryResponse<?> getHistoryResponse(Revision<Long, Study> rev){
+        AuditRevision auditRevision = (AuditRevision) rev.getMetadata().getDelegate();
+        Study study = rev.getEntity();
+        String time = rev.getRevisionInstant().toString().substring(9,28);
+        StudyInfo studyInfo = StudyInfo.of(study);
+        return HistoryResponse.from(time, auditRevision, studyInfo);
+
     }
 }
