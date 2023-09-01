@@ -1,11 +1,15 @@
 package board.project;
 
+import board.common.audit.AuditRevision;
+import board.common.dto.HistoryResponse;
 import board.common.exception.DomainException;
 import board.member.Member;
 import board.member.MemberRepository;
 import board.study.Study;
 import board.study.StudyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +78,20 @@ public class ProjectService {
 
         //projectRepository.save(project);
         //return new ProjectResponse(project);
+    }
+
+    @Transactional
+    public List<HistoryResponse<?>> readProjectHistoryList(Long id) {
+        Revisions<Long, Project> revisions = projectRepository.findRevisions(id);
+        return revisions.getContent().stream()
+                .map(rev -> getHistoryResponse(rev))
+                .collect(Collectors.toList());
+    }
+    private static <T> HistoryResponse<?> getHistoryResponse(Revision<Long, Project> rev){
+        AuditRevision auditRevision = (AuditRevision) rev.getMetadata().getDelegate();
+        Project project = rev.getEntity();
+        String time = rev.getRevisionInstant().toString().substring(9,28);
+        ProjectInfo projectInfo = ProjectInfo.of(project);
+        return HistoryResponse.from(time, auditRevision, projectInfo);
     }
 }

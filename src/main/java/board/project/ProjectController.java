@@ -1,5 +1,6 @@
 package board.project;
 
+import board.common.dto.HistoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @ResponseBody
     @PostMapping
     @Operation(summary = "프로젝트를 생성합니다 ➕ ")
     public ResponseEntity<ProjectResponse> createProject(@RequestBody ProjectRequest.CreateProjectRequest request){
@@ -25,21 +25,20 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
-    @ResponseBody
     @GetMapping("/{id}")
     @Operation(summary = "특정 프로젝트를 조회합니다 🔍 ")
     public ResponseEntity<ProjectResponse> readProject(@PathVariable Long id){
         ProjectResponse response = projectService.readProject(id);
         return ResponseEntity.ok(response);
     }
-    @ResponseBody
+
     @GetMapping
     @Operation(summary = "프로젝트 리스트를 모두 조회합니다 🔍 [ ]")
     public ResponseEntity<List<ProjectResponse>> readProjectList(){
         List<ProjectResponse> response = projectService.readProjectList();
         return ResponseEntity.ok(response);
     }
-    @ResponseBody
+
     @DeleteMapping("/{id}")
     @Operation(summary = "프로젝트를 삭제합니다 🗑 ")
     public ResponseEntity<ProjectResponse> deleteProject(@PathVariable Long id){
@@ -47,7 +46,7 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @ResponseBody
+
     @PatchMapping("/{id}")
     @Operation(summary = "프로젝트를 수정합니다 ♻️ ")
     public ResponseEntity<Void> updateProject(
@@ -55,5 +54,12 @@ public class ProjectController {
             @RequestBody ProjectRequest.UpdateProjectRequest request){
         projectService.updateService(id, request);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/history/{id}")
+    @Operation(summary = "멤버를 히스토리를 조회합니다")
+    public <T> ResponseEntity<List<HistoryResponse<?>>> readProjectList(@PathVariable Long id){
+        List<HistoryResponse<?>> projects = projectService.readProjectHistoryList(id);
+        return ResponseEntity.ok(projects);
     }
 }
