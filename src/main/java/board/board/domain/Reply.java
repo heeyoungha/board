@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "reply")
-//@Audited
 @NoArgsConstructor
 public class Reply extends BaseEntity {
 
