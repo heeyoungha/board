@@ -60,28 +60,19 @@ public class MemberService {
 
 
         //누가
-//        AuditRevision revision = (AuditRevision) rev;
         Member member = rev.getEntity();
+
+        //ResponseHitory 객체
         AuditRevision auditRevision = (AuditRevision) rev.getMetadata().getDelegate();
 
         //무엇을
-        String revisionType = rev.getMetadata().getRevisionType().toString();
+        //String revisionType = rev.getMetadata().getRevisionType().toString();
 
         //시간
         String time = rev.getRevisionInstant().toString().substring(9,28);
 
-        //HistoryResponse<Member> 객체 생성
-        //HistoryResponse<Member> historyResponse = HistoryResponse.createHistoryResponse(member, time, revisionType, Member.class);
-      /*  HistoryResponse<Member> historyResponse = HistoryResponse.createHistoryResponse(time, revisionType, member);
-
-        //HistoryResponse<Member>를 T객체로 변환해서 반환
-        ObjectMapper objectMapper = new ObjectMapper();
-        T convertedEntity = objectMapper.convertValue(historyResponse, entityType);
-
-        return new HistoryResponse<>(convertedEntity, time, revisionType);*/
-
         MemberInfo memberInfo = MemberInfo.of(member);
-        return HistoryResponse.from(time, revisionType, memberInfo);
+        return HistoryResponse.from(time, auditRevision, memberInfo);
     }
 
 
