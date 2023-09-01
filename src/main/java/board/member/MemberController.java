@@ -1,6 +1,7 @@
 package board.member;
 
 import board.common.BaseEntity;
+import board.common.dto.HistoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -52,5 +53,13 @@ public class MemberController extends BaseEntity {
         MBookmarkResponse response = memberService.getBookmarkAverageBookmark(id);
 
         return ResponseEntity.ok(response);
+    }
+
+    @ResponseBody
+    @GetMapping("/history/{id}")
+    @Operation(summary = "멤버를 히스토리를 조회합니다")
+    public <T> ResponseEntity<List<HistoryResponse<?>>> readMemberHistoryList(@PathVariable Long id, Class<T> entityType){
+        List<HistoryResponse<?>> members = memberService.readMemberHistoryList(id, entityType);
+        return ResponseEntity.ok(members);
     }
 }

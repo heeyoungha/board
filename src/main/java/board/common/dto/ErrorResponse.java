@@ -1,4 +1,4 @@
-package board.common.exception;
+package board.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

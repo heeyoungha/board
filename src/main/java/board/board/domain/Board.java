@@ -5,6 +5,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +15,8 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "board")
-//@Audited
+@Audited
+@AuditOverride(forClass = BaseEntity.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
 
@@ -27,6 +31,7 @@ public class Board extends BaseEntity {
     private String writer;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @NotAudited
     private List<Reply> replyList;
 
     @Column(columnDefinition = "TEXT", nullable = false)

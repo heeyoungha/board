@@ -10,17 +10,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Delegate;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
+
 @Getter
 @Entity
 @Table(name = "member")
-//@Audited(targetAuditMode = NOT_AUDITED)
-//@AuditOverride(forClass= BaseEntity.class)
+@Audited(targetAuditMode = NOT_AUDITED)
+@AuditOverride(forClass=BaseEntity.class)
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Member extends BaseEntity {
@@ -42,9 +46,10 @@ public class Member extends BaseEntity {
     @Delegate
     private Address address;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Project> projects = new ArrayList<>();
 
+    @NotAudited
     @OneToMany(mappedBy = "member")
     private List<Reply> replyList;
 

@@ -1,8 +1,12 @@
 package board.member;
 
+import board.common.audit.AuditRevision;
+import board.common.dto.HistoryResponse;
 import board.common.exception.DomainException;
 import board.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.history.Revision;
+import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +47,43 @@ public class MemberService {
                     .collect(Collectors.toList());
         return members;
     }
+
+    @Transactional
+    public <T> List<HistoryResponse<?>> readMemberHistoryList(Long id, Class<T> entityType) {
+        Revisions<Long, Member> revisions = memberRepository.findRevisions(id);
+        return revisions.getContent().stream()
+                .map(rev -> getHistoryResponse(rev, entityType))
+                .collect(Collectors.toList());
+    }
+
+    private static <T> HistoryResponse<?> getHistoryResponse(Revision<Long, Member> rev, Class<T> entityType) {
+
+
+        //누가
+//        AuditRevision revision = (AuditRevision) rev;
+        Member member = rev.getEntity();
+        AuditRevision auditRevision = (AuditRevision) rev.getMetadata().getDelegate();
+
+        //무엇을
+        String revisionType = rev.getMetadata().getRevisionType().toString();
+
+        //시간
+        String time = rev.getRevisionInstant().toString().substring(9,28);
+
+        //HistoryResponse<Member> 객체 생성
+        //HistoryResponse<Member> historyResponse = HistoryResponse.createHistoryResponse(member, time, revisionType, Member.class);
+      /*  HistoryResponse<Member> historyResponse = HistoryResponse.createHistoryResponse(time, revisionType, member);
+
+        //HistoryResponse<Member>를 T객체로 변환해서 반환
+        ObjectMapper objectMapper = new ObjectMapper();
+        T convertedEntity = objectMapper.convertValue(historyResponse, entityType);
+
+        return new HistoryResponse<>(convertedEntity, time, revisionType);*/
+
+        MemberInfo memberInfo = MemberInfo.of(member);
+        return HistoryResponse.from(time, revisionType, memberInfo);
+    }
+
 
     public MemberResponse readMember(Long id) {
         Member member = memberRepository.findById(id)
