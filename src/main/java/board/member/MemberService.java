@@ -2,9 +2,11 @@ package board.member;
 
 import board.common.audit.AuditRevision;
 import board.common.dto.HistoryResponse;
+import board.common.email.event.MemberCreatedMessage;
 import board.common.exception.DomainException;
 import board.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
 
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     @Transactional
     public MemberResponse createMember(MemberRequest request) {
 
@@ -32,9 +36,11 @@ public class MemberService {
 //                .interest(request.getInterest())
 //                .address(new Address(request.getAddress1(),request.getAddress2(), request.getZipcode()))
 //                .build();
-        memberRepository.save(member);
+        Member persistMember = memberRepository.save(member);
 
-        return memberMapper.toMemberResponse(member);
+        applicationEventPublisher.publishEvent(new MemberCreatedMessage(persistMember));
+
+        return memberMapper.toMemberResponse(persistMember);
 
     }
 
