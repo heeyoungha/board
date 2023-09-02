@@ -15,6 +15,8 @@ public class MemberResponse {
 
     @Schema(description = "아이디", required = true, example = "1")
     private Long id;
+    @Schema(description = "메일주소", required = true, example = "wikihowto99@gmail.com")
+    private String email;
     @Schema(description = "유저네임", required = true, example = "홍길동")
     private String username;
     @Schema(description = "비밀번호", required = true, example = "1234")

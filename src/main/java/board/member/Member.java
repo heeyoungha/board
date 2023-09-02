@@ -35,6 +35,8 @@ public class Member extends BaseEntity {
 
     private String username;
 
+    private String email;
+
     private String pw;
 
     @NotAudited
@@ -56,8 +58,9 @@ public class Member extends BaseEntity {
     //메소드
 
     @Builder
-    public Member(String username, String pw, int age, String interest, board.member.type.Address address){
+    public Member(String username, String email, String pw, int age, String interest, board.member.type.Address address){
         this.username = username;
+        this.email = email;
         this.pw = pw;
         this.interest = interest;
         this.address = address;
