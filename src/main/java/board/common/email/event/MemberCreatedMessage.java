@@ -8,12 +8,14 @@ import lombok.ToString;
 @ToString
 public class MemberCreatedMessage {
 
+    private Long id;
     private String username;
     private String to;
     private String subject;
     private String message;
 
     public MemberCreatedMessage(Member member){
+        this.id = member.getId();
         this.to = member.getEmail();
         this.subject = "축하합니다. 가입이 승인되었습니다";
         this.message = String.format("%s님의 가입을 축하합니다", member.getUsername());
