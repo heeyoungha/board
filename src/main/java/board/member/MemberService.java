@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +24,22 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper memberMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Transactional
-    public MemberResponse createMember(MemberRequest request) {
+    public MemberResponse createMember(MemberRequest.CreateMemberRequest request) {
 
-        Member member = memberMapper.toMember(request);
+        MemberRequest.CreateMemberRequest afterEncodePw = MemberRequest.CreateMemberRequest.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .pw(passwordEncoder.encode(request.getPw()))
+                .age(request.getAge())
+                .interest(request.getInterest())
+                .address(request.getAddress())
+                .build();
+        Member member = memberMapper.toMember(afterEncodePw);
 //        Member member = Member.builder()
 //                .pw(request.getPw())
 //                .age(request.getAge())

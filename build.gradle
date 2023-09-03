@@ -51,6 +51,10 @@ dependencies {
 	//메일 발송
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+	//시큐리티
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.4.5'
+
+
 
 }
 
