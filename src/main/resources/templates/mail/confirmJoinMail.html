@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        div {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        small {
+            color: #007bff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h2>
+        안녕하세요 <span th:text="${userName}">홍길동</span>님,
+        가입을 축하합니다.
+    </h2>
+    <p>아래 링크를 클릭하면 이메일 인증이 완료됩니다.<p>
+    <a href='http://localhost:3000/auth/verify?token=" + member.getToken() + "'>인증 링크</a>
+</div>
+</body>
+</html>

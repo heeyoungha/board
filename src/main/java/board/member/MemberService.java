@@ -12,6 +12,7 @@ import org.springframework.data.history.Revisions;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +41,8 @@ public class MemberService {
                 .address(request.getAddress())
                 .build();
         Member member = memberMapper.toMember(afterEncodePw);
-//        Member member = Member.builder()
-//                .pw(request.getPw())
-//                .age(request.getAge())
-//                .username(request.getUsername())
-//                .interest(request.getInterest())
-//                .address(new Address(request.getAddress1(),request.getAddress2(), request.getZipcode()))
-//                .build();
+        member.updateToken();
+
         Member persistMember = memberRepository.save(member);
 
         applicationEventPublisher.publishEvent(new MemberCreatedMessage(persistMember));
@@ -118,5 +114,22 @@ public class MemberService {
                 .bookmark(member.getBookmarkAverageBookmark())
                 .userName(member.getUsername())
                 .build();
+    }
+
+    @Transactional
+    public String checkEmailToken(String token, Long id, Model model) {
+        Member member = memberRepository.findById(id).orElseThrow(()-> DomainException.notFindRow(id));
+
+        String view = "mail/checked-email";
+
+        if(!member.getToken().equals(token)){
+            model.addAttribute("error", "wrong.email");
+            return view;
+        }
+
+        //member status 변경
+        member.updateStatus("valid");
+        model.addAttribute("userName", member.getUsername());
+        return view;
     }
 }

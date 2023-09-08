@@ -70,7 +70,7 @@ public class CommonAdviceController {
     }
 
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR) //500대 에러
     @ExceptionHandler(value = MessagingException.class)
     public ResponseEntity<ErrorResponse> messagingException(MessagingException e){
 
