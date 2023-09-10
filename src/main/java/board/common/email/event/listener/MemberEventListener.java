@@ -3,7 +3,6 @@ package board.common.email.event.listener;
 
 import board.common.config.AppProperties;
 import board.common.email.event.MemberCreatedMessage;
-import board.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -25,7 +24,6 @@ import javax.mail.internet.MimeMessage;
 public class MemberEventListener {
 
     private final JavaMailSender javaMailSender;
-    private final MemberRepository memberRepository;
     private final TemplateEngine templateEngine;
     private final AppProperties appProperties;
 

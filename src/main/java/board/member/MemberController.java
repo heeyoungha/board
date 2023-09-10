@@ -15,18 +15,18 @@ import java.util.List;
 @RequestMapping("/v1/api/member")
 @RequiredArgsConstructor
 @Tag(name = "member v1 API", description = "회원를 관리하는 API")
-public class MemberController extends BaseEntity {
+public class MemberController{
 
     private final MemberService memberService;
 
-    @PostMapping("/")
+    @PostMapping
     @Operation(summary = "회원을 생성합니다 ➕ ")
     public ResponseEntity<MemberResponse> createMember(@RequestBody MemberRequest request){
         MemberResponse response = memberService.createMember(request);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(summary = "회원 리스트를 전부 조회합니다 🔍 [ ]")
     public ResponseEntity<List<MemberResponse>> readMemberList(){
         List<MemberResponse> members = memberService.readMemberList();
