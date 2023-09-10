@@ -40,7 +40,7 @@ public class StudyApiControllerTest extends AcceptanceTest {
         RestAssured
                 .given()
                 .when()
-                    .get("/study"+ id)
+                    .get("/v1/api/study/"+ id)
                 .then()
                     .statusCode(500);
     }
@@ -49,7 +49,7 @@ public class StudyApiControllerTest extends AcceptanceTest {
         RestAssured
                 .given()
                 .when()
-                    .delete("/study/"+ id)
+                    .delete("/v1/api/study/"+ id)
                 .then()
                     .statusCode(204).log().all();
     }
@@ -58,7 +58,7 @@ public class StudyApiControllerTest extends AcceptanceTest {
         RestAssured
                 .given()
                 .when()
-                    .get("/study/"+ id)
+                    .get("/v1/api/study/"+ id)
                 .then()
                     .statusCode(200).log().all();
     }
@@ -69,7 +69,7 @@ public class StudyApiControllerTest extends AcceptanceTest {
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
                     .body(request)
                 .when()
-                    .post("/study")
+                    .post("/v1/api/study")
                 .then()
                     .statusCode(200).log().all()
                     .extract()

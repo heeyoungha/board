@@ -1,6 +1,6 @@
 package board.controller;
 
-import board.member.MemberRequest;
+import board.member.MemberRequest.CreateMemberRequest;
 import board.project.ProjectRequest;
 import board.study.StudyRequest;
 import board.util.AcceptanceTest;
@@ -15,26 +15,29 @@ import org.springframework.test.context.ActiveProfiles;
 @DisplayName("프로젝트 인수 테스트")
 public class ProjectApiControllerTest extends AcceptanceTest {
 
-    ProjectRequest.CreateProjectRequest requestSportsYoung;
-    ProjectRequest.CreateProjectRequest requestCodingHong;
+    ProjectRequest.CreateProjectRequest SportsYoung;
+    ProjectRequest.CreateProjectRequest CodingHong;
 
     @BeforeEach
     void setUp() {
         //스터디 생성
-        StudyApiControllerTest.createStudy(new StudyRequest("sports"));
-        StudyApiControllerTest.createStudy(new StudyRequest("coding"));
+        StudyApiControllerTest.createStudy(new StudyRequest("sports", "망원", "러닝 모집", "주 3회 인증 필수"));
+        StudyApiControllerTest.createStudy(new StudyRequest("coding", "강남", "코테 스터디", "퇴근 후 모임"));
 
         //회원 생성
-        MemberApiTest.createMember(new MemberRequest("young", "2134",30,"coding", "서울시 동작구","상세주소","432423"));
-        MemberApiTest.createMember(new MemberRequest("hong", "2134",30,"coding", "서울시 동작구","상세주소","432423"));
+        CreateMemberRequest.MemberAddressRequest memberAddressRequest = new CreateMemberRequest.MemberAddressRequest("서울시 동작구", "상세주소", "432423");
+        MemberApiTest.createMember(new CreateMemberRequest("young", "123@ggmail.com","2134",30,"coding","34fd233",memberAddressRequest));
+
+        CreateMemberRequest.MemberAddressRequest hongAddressRequest = new CreateMemberRequest.MemberAddressRequest("서울시 동작구", "상세주소", "432423");
+        MemberApiTest.createMember(new CreateMemberRequest("hong", "123@ggmail.com","2134",30,"coding","34fd233",hongAddressRequest));
 
 
         //ProjectRequest정보 생성
-        requestSportsYoung = new ProjectRequest.CreateProjectRequest
-                ("런닝 1회차", "2020-02-02", "sports", "young", 100);
+        SportsYoung = new ProjectRequest.CreateProjectRequest
+                ("런닝 1회차", "2020-02-02", 1L, "young", 100);
 
-        requestCodingHong = new ProjectRequest.CreateProjectRequest
-                ("모각코 1회차", "2020-02-02", "coding", "hong", 200);
+        CodingHong = new ProjectRequest.CreateProjectRequest
+                ("모각코 1회차", "2020-02-02", 2L, "hong", 200);
 
     }
 
@@ -42,11 +45,12 @@ public class ProjectApiControllerTest extends AcceptanceTest {
     @DisplayName("프로젝트 정보 관리")
     void createStudyTest() {
         // 프로젝트 정보 생성
-        long id1 = createProject(requestSportsYoung);
-        long id2 = createProject(requestCodingHong);
+        long id1 = createProject(SportsYoung);
+        long id2 = createProject(CodingHong);
 
         // 프로젝트 정보 조회
         readProject(id1);
+
 
         // 프로젝트 정보 삭제
         deleteProject(id1);
@@ -93,7 +97,7 @@ public class ProjectApiControllerTest extends AcceptanceTest {
         RestAssured
                 .given()
                 .when()
-                .get("/project"+ id)
+                .get("/v1/api/project/"+ id)
                 .then()
                 .statusCode(500);
     }
@@ -102,7 +106,7 @@ public class ProjectApiControllerTest extends AcceptanceTest {
         RestAssured
                 .given()
                 .when()
-                .delete("/project/"+ id)
+                .delete("/v1/api/project/"+ id)
                 .then()
                 .statusCode(204).log().all();
     }
@@ -111,7 +115,7 @@ public class ProjectApiControllerTest extends AcceptanceTest {
         RestAssured
                 .given()
                 .when()
-                .get("/project/"+ id)
+                .get("/v1/api/project/"+ id)
                 .then()
                 .statusCode(200).log().all();
     }
@@ -122,7 +126,7 @@ public class ProjectApiControllerTest extends AcceptanceTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/project")
+                .post("/v1/api/project")
                 .then()
                 .statusCode(200).log().all()
                 .extract()
