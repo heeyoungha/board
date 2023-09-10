@@ -9,11 +9,13 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
 
-    Member toMember(MemberRequest memberRequest);
+    Member toMember(MemberRequest.CreateMemberRequest memberRequest);
 
     MemberResponse toMemberResponse(Member member);
 
-    Address toAddress(MemberRequest.MemberAddressRequest address);
+    Address toAddress(MemberRequest.CreateMemberRequest.MemberAddressRequest address);
 
     MemberResponse.MemberAddressResponse toMemberAddressResponse(Address address);
+
+    Member toUpdateMember(MemberRequest.UpdateMemberRequest memberRequest);
 }

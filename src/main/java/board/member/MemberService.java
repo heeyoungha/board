@@ -51,6 +51,20 @@ public class MemberService {
 
     }
 
+    //Member와 업데이트Member가 1:1 대응되는 경우 거의 없음
+    @Transactional
+    public MemberResponse updateMember(Long id, MemberRequest.UpdateMemberRequest request) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(()-> DomainException.notFindRow(id));
+        /*
+        Member updateMember = memberMapper.toUpdateMember(request);
+
+        member.updateMember(updateMember);
+        */
+        member.updateMember(request);
+        return memberMapper.toMemberResponse(member);
+    }
+
     @Transactional
     public List<MemberResponse> readMemberList() {
         List<MemberResponse> members = new ArrayList<>();

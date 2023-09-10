@@ -77,13 +77,13 @@ public class Member extends BaseEntity {
     }
     //Member보다 다른 객체로 변경 필요.
     //@Builder
-    public void updateMember(Member member){
-        this.username = member.getUsername();
-        this.email = member.getEmail();
-        this.pw = member.pw;
-        this.interest = member.getInterest();
-        this.address = member.getAddress();
-        this.age = member.getAge();
+    public void updateMember(MemberRequest.UpdateMemberRequest request){
+        this.username = request.getUsername();
+        this.email = request.getEmail();
+        this.pw = request.getPw();
+        this.interest = request.getInterest();
+        this.address = request.updateAddress(request);
+        this.age = request.getAge();
     }
 
     public double getBookmarkAverageBookmark() {

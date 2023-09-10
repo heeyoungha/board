@@ -1,6 +1,5 @@
 package board.member;
 
-import board.common.BaseEntity;
 import board.common.dto.HistoryResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +20,7 @@ public class MemberController{
 
     @PostMapping
     @Operation(summary = "회원을 생성합니다 ➕ ")
-    public ResponseEntity<MemberResponse> createMember(@RequestBody MemberRequest request){
+    public ResponseEntity<MemberResponse> createMember(@RequestBody MemberRequest.CreateMemberRequest request){
         MemberResponse response = memberService.createMember(request);
         return ResponseEntity.ok(response);
     }
@@ -37,6 +36,13 @@ public class MemberController{
     @Operation(summary = "특정 회원을 조회합니다 🔍 M ")
     public ResponseEntity<MemberResponse> readMember(@PathVariable Long id){
         MemberResponse response = memberService.readMember(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "회원의 정보를 수정합니다 🛠 ")
+    public ResponseEntity<MemberResponse> editMember(@PathVariable Long id, @RequestBody MemberRequest.UpdateMemberRequest request){
+        MemberResponse response = memberService.updateMember(id, request);
         return ResponseEntity.ok(response);
     }
 
